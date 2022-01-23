@@ -1,0 +1,7 @@
+PROGRAM hello ;
+VAR 
+    teste : INTEGER ;
+
+BEGIN
+    teste := -2 ;
+END

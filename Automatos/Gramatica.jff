@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="0" name="q0">
+			<x>64.0</x>
+			<y>36.0</y>
+			<initial/>
+		</state>
+		<state id="1" name="q1">
+			<x>223.0</x>
+			<y>34.0</y>
+		</state>
+		<state id="2" name="q2">
+			<x>306.0</x>
+			<y>91.0</y>
+		</state>
+		<state id="3" name="q3">
+			<x>465.0</x>
+			<y>96.0</y>
+		</state>
+		<state id="4" name="q4">
+			<x>570.0</x>
+			<y>96.0</y>
+		</state>
+		<state id="5" name="q5">
+			<x>571.0</x>
+			<y>184.0</y>
+		</state>
+		<state id="6" name="q6">
+			<x>657.0</x>
+			<y>95.0</y>
+		</state>
+		<state id="7" name="q7">
+			<x>793.0</x>
+			<y>91.0</y>
+		</state>
+		<state id="8" name="q8">
+			<x>986.0</x>
+			<y>89.0</y>
+		</state>
+		<state id="9" name="q9">
+			<x>1150.0</x>
+			<y>90.0</y>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>8</from>
+			<to>9</to>
+			<read>A..Z</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>6</to>
+			<read>ID</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>PONTO_VIRGULA</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>A..Z</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>4</to>
+			<read/>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>5</to>
+			<read/>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>CHAR</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>2</to>
+			<read>ID</read>
+		</transition>
+		<transition>
+			<from>8</from>
+			<to>9</to>
+			<read>a..z</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>a..z</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>PROGRAM</read>
+		</transition>
+		<transition>
+			<from>8</from>
+			<to>9</to>
+			<read>0..9</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>REAL</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>STRING</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>4</to>
+			<read>CONST</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>INTEGER</read>
+		</transition>
+		<transition>
+			<from>6</from>
+			<to>7</to>
+			<read>DOIS_PONTOS</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>0..9</read>
+		</transition>
+	</automaton>
+</structure>

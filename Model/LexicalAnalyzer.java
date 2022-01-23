@@ -8,7 +8,7 @@ import java.util.List;
 public class LexicalAnalyzer {
     private Map<String, Token> keywords;
 
-    public LexicalAnalyzer(){
+    public LexicalAnalyzer() {
         this.keywords = new HashMap<>();
         keywords.put("PROGRAM", Token.PALAVRA_CHAVE);
         keywords.put("BEGIN", Token.PALAVRA_CHAVE);
@@ -56,11 +56,26 @@ public class LexicalAnalyzer {
         keywords.put("*)", Token.ASTERISCO_PARENTESE);
     }
 
-    public List<Lexeme> codeReader(Map<Integer, String> code){
+    public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
         List<Lexeme> lexemes = new ArrayList<>();
-        code.forEach((idLine, line) ->{
-            Map<String, Token> 
+        code.forEach((idLine, line) -> {
+            Map<String, Token> lineMap = lineReader(line.strip());
+            lineMap.forEach((value, token) -> lexemes.add(new Lexeme(token, value, idLine)));
         });
         return lexemes;
+    }
+
+    private Map<String, Token> lineReader(String line) {
+        Map<String, Token> lineTokens = new HashMap<>();
+        LexicalAutomaton la = new LexicalAutomaton();
+
+        for (String str : line.split(" ")) {
+            if (keywords.containsKey(str.toUpperCase())) {
+                lineTokens.put(str, keywords.get(str.toUpperCase()));
+            } else {
+                lineTokens.put(str, la.evaluate(str));
+            }
+        }
+        return lineTokens;
     }
 }

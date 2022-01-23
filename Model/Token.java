@@ -28,5 +28,6 @@ public enum Token {
     FECHA_CHAVE,
     PARENTESE_ASTERISCO,
     ASTERISCO_PARENTESE,
-    PIPE
+    PIPE,
+    INVALID
 }

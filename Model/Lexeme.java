@@ -34,4 +34,14 @@ public class Lexeme {
     public void setLine(int line) {
         this.line = line;
     }
+
+    @Override
+    public String toString() {
+        return "token: " 
+                + getToken()
+                + "; value: " 
+                + getValue()
+                + "; line: "
+                + getLine();
+    }
 }
