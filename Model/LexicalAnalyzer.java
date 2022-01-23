@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class LexicalAnalyzer {
     private Map<String, Token> keywords;
 
     public LexicalAnalyzer() {
-        this.keywords = new HashMap<>();
+        this.keywords = new LinkedHashMap<>();
         keywords.put("PROGRAM", Token.PALAVRA_CHAVE);
         keywords.put("BEGIN", Token.PALAVRA_CHAVE);
         keywords.put("END", Token.PALAVRA_CHAVE);
@@ -54,19 +54,26 @@ public class LexicalAnalyzer {
         keywords.put("}", Token.FECHA_CHAVE);
         keywords.put("(*", Token.PARENTESE_ASTERISCO);
         keywords.put("*)", Token.ASTERISCO_PARENTESE);
+        
     }
 
     public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
         List<Lexeme> lexemes = new ArrayList<>();
+        String parsedCode = "";
         code.forEach((idLine, line) -> {
             Map<String, Token> lineMap = lineReader(line.strip());
-            lineMap.forEach((value, token) -> lexemes.add(new Lexeme(token, value, idLine)));
+            lineMap.forEach(
+                (value, token) -> {
+                    lexemes.add(new Lexeme(token, value, idLine));
+                    parsedCode = parsedCode.join("\n", parsedCode, codeParser(token, value, idLine));
+                });
         });
+        System.out.println(parsedCode);
         return lexemes;
     }
 
     private Map<String, Token> lineReader(String line) {
-        Map<String, Token> lineTokens = new HashMap<>();
+        Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
 
         for (String str : line.split(" ")) {
@@ -77,5 +84,23 @@ public class LexicalAnalyzer {
             }
         }
         return lineTokens;
+    }
+
+    public String codeParser(Token token, String value, Integer line){
+        String codeLine = "";
+        if (token.name().equals("IDENTIFICADOR")){
+            codeLine = codeLine 
+                        + String.join("", 
+                                    "<", token.name(), ",", 
+                                    String.valueOf(line), ",",
+                                    value, 
+                                    ">");
+        }else{
+            codeLine = codeLine 
+                        + String.join("", "<", value, ">");
+        }
+                
+        
+        return codeLine;
     }
 }

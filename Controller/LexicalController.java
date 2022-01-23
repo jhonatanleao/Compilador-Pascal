@@ -23,8 +23,6 @@ public class LexicalController {
         }
 
         List<Lexeme> lexemes = new LexicalAnalyzer().codeAnalizer(code);
-        for (Lexeme l : lexemes){
-            System.out.println(l.toString());
-        }
+    
     }
 }
