@@ -54,7 +54,7 @@ public class LexicalAnalyzer {
         keywords.put("}", Token.FECHA_CHAVE);
         keywords.put("(*", Token.PARENTESE_ASTERISCO);
         keywords.put("*)", Token.ASTERISCO_PARENTESE);
-        
+        keywords.put("END.", Token.PALAVRA_CHAVE);
     }
 
     public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
@@ -65,10 +65,9 @@ public class LexicalAnalyzer {
             lineMap.forEach(
                 (value, token) -> {
                     lexemes.add(new Lexeme(token, value, idLine));
-                    parsedCode = parsedCode.join("\n", parsedCode, codeParser(token, value, idLine));
                 });
         });
-        System.out.println(parsedCode);
+        
         return lexemes;
     }
 
@@ -86,21 +85,31 @@ public class LexicalAnalyzer {
         return lineTokens;
     }
 
-    public String codeParser(Token token, String value, Integer line){
+    public String codeParser(List<Lexeme> lexemes){
         String codeLine = "";
-        if (token.name().equals("IDENTIFICADOR")){
-            codeLine = codeLine 
-                        + String.join("", 
-                                    "<", token.name(), ",", 
-                                    String.valueOf(line), ",",
-                                    value, 
-                                    ">");
-        }else{
-            codeLine = codeLine 
-                        + String.join("", "<", value, ">");
-        }
-                
-        
+        int line = 0;
+        for (Lexeme lexeme : lexemes) {
+            if (line != lexeme.getLine()){
+                codeLine += "\n";
+                line = lexeme.getLine();
+            }
+            if (lexeme.getToken().name().equals("IDENTIFICADOR")){
+                codeLine += "".
+                            concat("<").
+                            concat(lexeme.getToken().name()).
+                            concat(",").
+                            concat(String.valueOf(lexeme.getLine())).
+                            concat(",").
+                            concat(lexeme.getValue()).
+                            concat(">");
+            }else{
+                codeLine += "".
+                            concat("<").
+                            concat(lexeme.getValue()).
+                            concat(">");
+            }
+        }   
+
         return codeLine;
     }
 }

@@ -21,8 +21,9 @@ public class LexicalController {
         for(int i = 0; i < lines.length; i++){
             code.put(i+1, lines[i]);
         }
-
-        List<Lexeme> lexemes = new LexicalAnalyzer().codeAnalizer(code);
+        LexicalAnalyzer lexicalAnalyzer = new  LexicalAnalyzer();
+        List<Lexeme> lexemes = lexicalAnalyzer.codeAnalizer(code);
+        System.out.println(lexicalAnalyzer.codeParser(lexemes));
     
     }
 }

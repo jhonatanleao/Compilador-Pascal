@@ -3,8 +3,6 @@ package Model;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.lang.model.util.ElementScanner6;
-
 public class LexicalAutomaton {
     private Map<LexicalState, Token> finalStates;
 
