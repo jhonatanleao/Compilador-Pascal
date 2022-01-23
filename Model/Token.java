@@ -1,10 +1,11 @@
-package trabalho_01.Model;
+package Model;
 
 public class Token {
 
     private String lexeme;
     private String category;
     private String token;
+    private int line;
 
     public Token(String lexeme, String token, String category){
         this.lexeme = lexeme;
@@ -34,5 +35,13 @@ public class Token {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
     }
 }

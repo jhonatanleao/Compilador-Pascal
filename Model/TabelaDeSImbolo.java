@@ -1,6 +1,5 @@
-package trabalho_01.Model;
+package Model;
 import java.util.ArrayList;
-import trabalho_01.Model.Token;
 import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
