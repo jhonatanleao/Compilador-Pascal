@@ -76,10 +76,22 @@ public class LexicalAnalyzer {
         LexicalAutomaton la = new LexicalAutomaton();
 
         for (String str : line.split(" ")) {
-            if (keywords.containsKey(str.toUpperCase())) {
-                lineTokens.put(str, keywords.get(str.toUpperCase()));
+            if(str.contains(";")){
+                String teste[] = str.split(";");
+                String gambi = String.join("", teste[0]);
+                System.out.println(gambi);
+                if(keywords.containsKey(gambi.toUpperCase())){
+                    lineTokens.put(gambi, keywords.get(gambi.toUpperCase()));                    
+                } else {
+                    lineTokens.put(gambi, la.evaluate(gambi));
+                }
+                lineTokens.put(";", keywords.get(";"));
             } else {
-                lineTokens.put(str, la.evaluate(str));
+                if (keywords.containsKey(str.toUpperCase())) {
+                    lineTokens.put(str, keywords.get(str.toUpperCase()));
+                } else {
+                    lineTokens.put(str, la.evaluate(str));
+                }                
             }
         }
         return lineTokens;

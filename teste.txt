@@ -1,6 +1,15 @@
-PROGRAM hello ;
+PROGRAM hello;
 VAR 
-    teste : INTEGER ;
+    teste : INTEGER;
 BEGIN
-    teste := -2 ;
+    // teste
+    
+    (*
+    sdasdsa
+    asdsd
+    *)
+
+    teste := -2;
+
+    { abre_comentario }
 END.
