@@ -7,8 +7,10 @@ import java.util.List;
 
 public class LexicalAnalyzer {
     private Map<String, Token> keywords;
+    private List<String> errorList;
 
     public LexicalAnalyzer() {
+        this.errorList = new ArrayList<>();
         this.keywords = new LinkedHashMap<>();
         keywords.put("PROGRAM", Token.PALAVRA_CHAVE);
         keywords.put("BEGIN", Token.PALAVRA_CHAVE);
@@ -57,6 +59,10 @@ public class LexicalAnalyzer {
         keywords.put("END.", Token.PALAVRA_CHAVE);
     }
 
+    public List<String> getErrorList() {
+        return errorList;
+    }
+
     public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
         List<Lexeme> lexemes = new ArrayList<>();
         String parsedCode = "";
@@ -76,14 +82,27 @@ public class LexicalAnalyzer {
         LexicalAutomaton la = new LexicalAutomaton();
 
         for (String str : line.split(" ")) {
-            if (keywords.containsKey(str.toUpperCase())) {
-                lineTokens.put(str, keywords.get(str.toUpperCase()));
+            if(str.contains(";")){
+                String teste[] = str.split(";");
+                String gambi = String.join("", teste[0]);
+                System.out.println(gambi);
+                if(keywords.containsKey(gambi.toUpperCase())){
+                    lineTokens.put(gambi, keywords.get(gambi.toUpperCase()));                    
+                } else {
+                    lineTokens.put(gambi, la.evaluate(gambi));
+                }
+                lineTokens.put(";", keywords.get(";"));
             } else {
-                lineTokens.put(str, la.evaluate(str));
+                if (keywords.containsKey(str.toUpperCase())) {
+                    lineTokens.put(str, keywords.get(str.toUpperCase()));
+                } else {
+                    lineTokens.put(str, la.evaluate(str));
+                }                
             }
         }
         return lineTokens;
     }
+
 
     public String codeParser(List<Lexeme> lexemes){
         String codeLine = "";
@@ -109,7 +128,6 @@ public class LexicalAnalyzer {
                             concat(">");
             }
         }   
-
         return codeLine;
     }
 }
