@@ -9,7 +9,8 @@ BEGIN
     asdsd
     *)
 
-    teste := -2;
-
+    2teste := -2;
+    teste%
+    easdadadfasdfasfa;
     { abre_comentario }
 END.

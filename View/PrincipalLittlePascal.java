@@ -1,4 +1,4 @@
-package view;
+package View;
 
 public class PrincipalLittlePascal extends javax.swing.JFrame {
 

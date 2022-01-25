@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class LexicalController {
         Path fileName = Path.of("teste.txt");
         String content = Files.readString(fileName);
         String[] lines = content.split("\n");      
-        Map<Integer, String> code = new HashMap<>();
+        Map<Integer, String> code = new LinkedHashMap<>();
         boolean lock = true;
 
         for(int i = 0; i < lines.length; i++){
@@ -32,13 +33,16 @@ public class LexicalController {
     }
 
     public void analyze() throws IOException{
-
-          
-        Map<Integer, String> code = new HashMap<>();
+        Map<Integer, String> code = new LinkedHashMap<>();
         code = removeComments();
         LexicalAnalyzer lexicalAnalyzer = new  LexicalAnalyzer();
         List<Lexeme> lexemes = lexicalAnalyzer.codeAnalizer(code);
-        System.out.println(lexicalAnalyzer.codeParser(lexemes));
+        for (String error : lexicalAnalyzer.getErrorList()) {
+            System.out.println(error);    
+        }
+
+        lexicalAnalyzer.codeParser(lexemes);
+        
     
     }
 }

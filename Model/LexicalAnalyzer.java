@@ -65,9 +65,10 @@ public class LexicalAnalyzer {
 
     public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
         List<Lexeme> lexemes = new ArrayList<>();
-        String parsedCode = "";
+        
         code.forEach((idLine, line) -> {
-            Map<String, Token> lineMap = lineReader(line.strip());
+            //System.out.println(line);
+            Map<String, Token> lineMap = lineReader(line.strip(), idLine);
             lineMap.forEach(
                 (value, token) -> {
                     lexemes.add(new Lexeme(token, value, idLine));
@@ -77,32 +78,57 @@ public class LexicalAnalyzer {
         return lexemes;
     }
 
-    private Map<String, Token> lineReader(String line) {
+    private Map<String, Token> lineReader(String line, Integer idLine) {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
-
+        boolean containSemicolon = false;
         for (String str : line.split(" ")) {
             if(str.contains(";")){
                 String teste[] = str.split(";");
-                String gambi = String.join("", teste[0]);
-                System.out.println(gambi);
-                if(keywords.containsKey(gambi.toUpperCase())){
-                    lineTokens.put(gambi, keywords.get(gambi.toUpperCase()));                    
-                } else {
-                    lineTokens.put(gambi, la.evaluate(gambi));
-                }
-                lineTokens.put(";", keywords.get(";"));
+                str = String.join("", teste[0]);
+                containSemicolon = true;
+            } 
+            
+            wordAnalizer(str, idLine, line.indexOf(str));
+
+            if (keywords.containsKey(str.toUpperCase())) {
+                lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
-                if (keywords.containsKey(str.toUpperCase())) {
-                    lineTokens.put(str, keywords.get(str.toUpperCase()));
-                } else {
-                    lineTokens.put(str, la.evaluate(str));
-                }                
+                lineTokens.put(str, la.evaluate(str));
+            }     
+            if(containSemicolon){
+                lineTokens.put(";", keywords.get(";"));
+                containSemicolon = false;
             }
         }
         return lineTokens;
     }
 
+    public void wordAnalizer(String str, Integer idLine, Integer idWord){
+        String error = "";
+        if (str.length() > 15){
+            error = "String with more than 15 characters in line %1$d, column %2$d";
+            getErrorList().add(String.format(error, idLine, idWord));
+        }
+        
+        String charsString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+
+        if(!charsString.contains(String.valueOf(str.charAt(0)))){
+            error = "String begins with invalid character in line %1$d, column %2$d";
+            getErrorList().add(String.format(error, idLine, idWord));
+            System.out.println(str);
+        }
+       
+        String specialCaracteres = "$ % @ # ! ? / ° º `";
+        for (String s : specialCaracteres.split(" ")) {
+            if (str.indexOf(s) != -1){
+                error = "String contains invalid characters in line %1$d, column %2$d";
+                getErrorList().add(String.format(error, idLine, idWord));
+                break;
+            }
+        }
+
+    }
 
     public String codeParser(List<Lexeme> lexemes){
         String codeLine = "";
