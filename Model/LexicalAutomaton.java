@@ -28,13 +28,14 @@ public class LexicalAutomaton {
                 else if (entry == '+' || entry == '-')
                     return LexicalState.Q5;
                 else
-                    return LexicalState.BEGIN_INVALID;
+                    return LexicalState.INVALID_CARACTERE;
             }  
 
             case Q1: {
                 if ((entry >= 'A' && entry <= 'Z') 
                         || (entry >= 'a' && entry <= 'z') 
-                        || (entry >= '0' && entry <= '9'))
+                        || (entry >= '0' && entry <= '9')
+                        || (entry == '_'))
                         return LexicalState.Q1;
                 else 
                     return LexicalState.INVALID_CARACTERE;
@@ -52,33 +53,41 @@ public class LexicalAutomaton {
                     return LexicalState.Q4;
                 else if (entry == '.')
                     return LexicalState.Q6;
-                else 
+                else if ((entry >= 'A' && entry <= 'Z') || (entry >= 'a' && entry <= 'z'))
                     return LexicalState.BEGIN_INVALID;
+                else
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q5: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q4;
-                else
+                else if ((entry >= 'A' && entry <= 'Z') || (entry >= 'a' && entry <= 'z'))
                     return LexicalState.BEGIN_INVALID;
+                else
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q6: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
-                else
+                else if ((entry >= 'A' && entry <= 'Z') || (entry >= 'a' && entry <= 'z'))
                     return LexicalState.BEGIN_INVALID;
+                else
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q7: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
-                else
+                else if ((entry >= 'A' && entry <= 'Z') || (entry >= 'a' && entry <= 'z'))
                     return LexicalState.BEGIN_INVALID;
+                else
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             default:
-                return LexicalState.INVALID_CARACTERE;
+                return currentState;
         }
     }
 
@@ -86,10 +95,7 @@ public class LexicalAutomaton {
         LexicalState state = LexicalState.INITIAL;
         for (char c : str.toCharArray()) {
             state = changeState(state, c);
-            if(state == LexicalState.INVALID_CARACTERE ||state == LexicalState.BEGIN_INVALID){
-                return finalStates.getOrDefault(state, Token.INVALID_CARACTERE);
-            }
         }
-        return finalStates.getOrDefault(state, Token.INVALID_CARACTERE);
+        return finalStates.get(state);
     }
 }

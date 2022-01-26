@@ -7,7 +7,7 @@ import java.util.List;
 
 public class LexicalAnalyzer {
     private Map<String, Token> keywords;
-    private List<String> errorList;
+    private List<Erro> errorList;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class LexicalAnalyzer {
         keywords.put("END.", Token.PALAVRA_CHAVE);
     }
 
-    public List<String> getErrorList() {
+    public List<Erro> getErrorList() {
         return errorList;
     }
 
@@ -67,7 +67,6 @@ public class LexicalAnalyzer {
         List<Lexeme> lexemes = new ArrayList<>();
         
         code.forEach((idLine, line) -> {
-            //System.out.println(line);
             Map<String, Token> lineMap = lineReader(line.strip(), idLine);
             lineMap.forEach(
                 (value, token) -> {
@@ -99,7 +98,7 @@ public class LexicalAnalyzer {
                     moreThanFifteen = true;
 
                 if (token == Token.INVALID_CARACTERE || token == Token.BEGIN_INVALID ||  moreThanFifteen){
-                    wordAnalizer(str, idLine, line.indexOf(str), token);
+                    erroAnalizer(str, idLine, line.indexOf(str), token, moreThanFifteen);
                 }
                 lineTokens.put(str, token);
             }     
@@ -111,27 +110,22 @@ public class LexicalAnalyzer {
         return lineTokens;
     }
 
-    public void wordAnalizer(String str, Integer idLine, Integer idWord, Token token){
+    public void erroAnalizer(String str, Integer idLine, Integer idWord, Token token, boolean moreThanFifteen){
         String error = "";
-        if (str.length() > 15){
+        Integer id = getErrorList().size() + 1;
+        if (moreThanFifteen){
             error = "String with more than 15 characters in line %1$d, column %2$d";
-            getErrorList().add(String.format(error, idLine, idWord));
+            getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
        
-        String specialCaracteres = "$ % @ # ! ? / ° º ` ç Ç";
         if(token == Token.INVALID_CARACTERE){
-            for (String s : specialCaracteres.split(" ")) {
-                if (str.indexOf(s) != -1){
-                    error = "String contains invalid characters in line %1$d, column %2$d";
-                    getErrorList().add(String.format(error, idLine, idWord));
-                    break;
-                }
-            }
+            error = "String contains invalid characters in line %1$d, column %2$d";
+            getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
         if(token == Token.BEGIN_INVALID){
             error = "Invalid begin for declaration in line %1$d, column %2$d";
-            getErrorList().add(String.format(error, idLine, idWord));
+            getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
     }

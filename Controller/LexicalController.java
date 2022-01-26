@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import Model.Lexeme;
-import Model.LexicalAnalyzer;
+import Model.*;
+
 
 
 public class LexicalController {
@@ -37,11 +37,11 @@ public class LexicalController {
         code = removeComments();
         LexicalAnalyzer lexicalAnalyzer = new  LexicalAnalyzer();
         List<Lexeme> lexemes = lexicalAnalyzer.codeAnalizer(code);
-        for (String error : lexicalAnalyzer.getErrorList()) {
-            System.out.println(error);    
+        for (Erro error : lexicalAnalyzer.getErrorList()) {
+            System.out.println(error.getType() + "\t" + error.getLexeme());    
         }
 
-        lexicalAnalyzer.codeParser(lexemes);
+        //lexicalAnalyzer.codeParser(lexemes);
         
     
     }

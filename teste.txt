@@ -8,9 +8,11 @@ BEGIN
     sdasdsa
     asdsd
     *)
-
-    123teste := -2;
+    - 
+    2A SDA )29 ;444=12 $@ +10;
+   -teste := -2;
     teste% + KSDA#
     easdadadfasdfasfa;
+    -0.0$;
     { abre_comentario }
 END.
