@@ -12,6 +12,8 @@ public class LexicalAutomaton {
         finalStates.put(LexicalState.Q3, Token.STRING);
         finalStates.put(LexicalState.Q4, Token.INTEIRO);
         finalStates.put(LexicalState.Q7, Token.REAL);
+        finalStates.put(LexicalState.BEGIN_INVALID, Token.BEGIN_INVALID);
+        finalStates.put(LexicalState.INVALID_CARACTERE, Token.INVALID_CARACTERE);
     }
 
     private LexicalState changeState(LexicalState currentState, char entry) {
@@ -26,7 +28,7 @@ public class LexicalAutomaton {
                 else if (entry == '+' || entry == '-')
                     return LexicalState.Q5;
                 else
-                    return LexicalState.INVALID_CARACTERE;
+                    return LexicalState.BEGIN_INVALID;
             }  
 
             case Q1: {
@@ -51,28 +53,28 @@ public class LexicalAutomaton {
                 else if (entry == '.')
                     return LexicalState.Q6;
                 else 
-                    return LexicalState.INVALID_CARACTERE;
+                    return LexicalState.BEGIN_INVALID;
             }
 
             case Q5: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q4;
                 else
-                    return LexicalState.INVALID_CARACTERE;
+                    return LexicalState.BEGIN_INVALID;
             }
 
             case Q6: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
                 else
-                    return LexicalState.INVALID_CARACTERE;
+                    return LexicalState.BEGIN_INVALID;
             }
 
             case Q7: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
                 else
-                    return LexicalState.INVALID_CARACTERE;
+                    return LexicalState.BEGIN_INVALID;
             }
 
             default:
@@ -84,7 +86,10 @@ public class LexicalAutomaton {
         LexicalState state = LexicalState.INITIAL;
         for (char c : str.toCharArray()) {
             state = changeState(state, c);
+            if(state == LexicalState.INVALID_CARACTERE ||state == LexicalState.BEGIN_INVALID){
+                return finalStates.getOrDefault(state, Token.INVALID_CARACTERE);
+            }
         }
-        return finalStates.getOrDefault(state, Token.INVALID);
+        return finalStates.getOrDefault(state, Token.INVALID_CARACTERE);
     }
 }

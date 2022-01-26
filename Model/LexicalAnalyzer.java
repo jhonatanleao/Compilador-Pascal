@@ -82,6 +82,7 @@ public class LexicalAnalyzer {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
         boolean containSemicolon = false;
+        boolean moreThanFifteen = false;
         for (String str : line.split(" ")) {
             if(str.contains(";")){
                 String teste[] = str.split(";");
@@ -93,8 +94,12 @@ public class LexicalAnalyzer {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
                 Token token = la.evaluate(str);
-                if (token == Token.INVALID){
-                    wordAnalizer(str, idLine, line.indexOf(str));
+                
+                if(str.length() > 15)
+                    moreThanFifteen = true;
+
+                if (token == Token.INVALID_CARACTERE || token == Token.BEGIN_INVALID ||  moreThanFifteen){
+                    wordAnalizer(str, idLine, line.indexOf(str), token);
                 }
                 lineTokens.put(str, token);
             }     
@@ -106,7 +111,7 @@ public class LexicalAnalyzer {
         return lineTokens;
     }
 
-    public void wordAnalizer(String str, Integer idLine, Integer idWord){
+    public void wordAnalizer(String str, Integer idLine, Integer idWord, Token token){
         String error = "";
         if (str.length() > 15){
             error = "String with more than 15 characters in line %1$d, column %2$d";
@@ -114,13 +119,21 @@ public class LexicalAnalyzer {
         }
        
         String specialCaracteres = "$ % @ # ! ? / ° º ` ç Ç";
-        for (String s : specialCaracteres.split(" ")) {
-            if (str.indexOf(s) != -1){
-                error = "String contains invalid characters in line %1$d, column %2$d";
-                getErrorList().add(String.format(error, idLine, idWord));
-                break;
+        if(token == Token.INVALID_CARACTERE){
+            for (String s : specialCaracteres.split(" ")) {
+                if (str.indexOf(s) != -1){
+                    error = "String contains invalid characters in line %1$d, column %2$d";
+                    getErrorList().add(String.format(error, idLine, idWord));
+                    break;
+                }
             }
         }
+
+        if(token == Token.BEGIN_INVALID){
+            error = "Invalid begin for declaration in line %1$d, column %2$d";
+            getErrorList().add(String.format(error, idLine, idWord));
+        }
+
     }
 
     public String codeParser(List<Lexeme> lexemes){

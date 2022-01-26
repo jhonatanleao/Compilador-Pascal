@@ -31,6 +31,7 @@ public enum Token {
     PIPE,
     INVALID_CARACTERE,
     BEGIN_INVALID,
-    INVALID
+    INVALID,
+    ONLY_NUMBER
     
 }

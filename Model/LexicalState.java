@@ -10,5 +10,5 @@ public enum LexicalState {
     Q6,
     Q7,
     INVALID_CARACTERE,
-    BEGIN_INVALID
+    BEGIN_INVALID,
 }

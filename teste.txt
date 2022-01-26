@@ -9,7 +9,7 @@ BEGIN
     asdsd
     *)
 
-    2teste := -2;
+    123teste := -2;
     teste% + KSDA#
     easdadadfasdfasfa;
     { abre_comentario }
