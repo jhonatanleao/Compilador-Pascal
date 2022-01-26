@@ -88,13 +88,15 @@ public class LexicalAnalyzer {
                 str = String.join("", teste[0]);
                 containSemicolon = true;
             } 
-            
-            wordAnalizer(str, idLine, line.indexOf(str));
 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
-                lineTokens.put(str, la.evaluate(str));
+                Token token = la.evaluate(str);
+                if (token == Token.INVALID){
+                    wordAnalizer(str, idLine, line.indexOf(str));
+                }
+                lineTokens.put(str, token);
             }     
             if(containSemicolon){
                 lineTokens.put(";", keywords.get(";"));
@@ -110,16 +112,8 @@ public class LexicalAnalyzer {
             error = "String with more than 15 characters in line %1$d, column %2$d";
             getErrorList().add(String.format(error, idLine, idWord));
         }
-        
-        String charsString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
-
-        if(!charsString.contains(String.valueOf(str.charAt(0)))){
-            error = "String begins with invalid character in line %1$d, column %2$d";
-            getErrorList().add(String.format(error, idLine, idWord));
-            System.out.println(str);
-        }
        
-        String specialCaracteres = "$ % @ # ! ? / ° º `";
+        String specialCaracteres = "$ % @ # ! ? / ° º ` ç Ç";
         for (String s : specialCaracteres.split(" ")) {
             if (str.indexOf(s) != -1){
                 error = "String contains invalid characters in line %1$d, column %2$d";
@@ -127,7 +121,6 @@ public class LexicalAnalyzer {
                 break;
             }
         }
-
     }
 
     public String codeParser(List<Lexeme> lexemes){

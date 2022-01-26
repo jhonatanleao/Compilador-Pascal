@@ -29,6 +29,8 @@ public enum Token {
     PARENTESE_ASTERISCO,
     ASTERISCO_PARENTESE,
     PIPE,
-    INVALID,
+    INVALID_CARACTERE,
+    BEGIN_INVALID,
+    INVALID
     
 }

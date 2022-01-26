@@ -26,7 +26,7 @@ public class LexicalAutomaton {
                 else if (entry == '+' || entry == '-')
                     return LexicalState.Q5;
                 else
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }  
 
             case Q1: {
@@ -35,7 +35,7 @@ public class LexicalAutomaton {
                         || (entry >= '0' && entry <= '9'))
                         return LexicalState.Q1;
                 else 
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }
             
             case Q2: {
@@ -51,32 +51,32 @@ public class LexicalAutomaton {
                 else if (entry == '.')
                     return LexicalState.Q6;
                 else 
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q5: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q4;
                 else
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q6: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
                 else
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             case Q7: {
                 if (entry >= '0' && entry <= '9')
                     return LexicalState.Q7;
                 else
-                    return LexicalState.INVALIDATION_STATE;
+                    return LexicalState.INVALID_CARACTERE;
             }
 
             default:
-                return LexicalState.INVALIDATION_STATE;
+                return LexicalState.INVALID_CARACTERE;
         }
     }
 
