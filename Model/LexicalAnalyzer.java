@@ -8,10 +8,12 @@ import java.util.List;
 public class LexicalAnalyzer {
     private Map<String, Token> keywords;
     private List<Erro> errorList;
+    private List<Lexeme> lexemes;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
         this.keywords = new LinkedHashMap<>();
+        this.lexemes = new ArrayList<>();
         keywords.put("PROGRAM", Token.PALAVRA_CHAVE);
         keywords.put("BEGIN", Token.PALAVRA_CHAVE);
         keywords.put("END", Token.PALAVRA_CHAVE);
@@ -63,9 +65,16 @@ public class LexicalAnalyzer {
         return errorList;
     }
 
-    public List<Lexeme> codeAnalizer(Map<Integer, String> code) {
-        List<Lexeme> lexemes = new ArrayList<>();
-        
+    public List<Lexeme> getLexemes(){
+        return lexemes;
+    }
+
+    public void clearLists(){
+        lexemes = new ArrayList<>();
+        errorList = new ArrayList<>();
+    }
+
+    public void codeAnalizer(Map<Integer, String> code) {
         code.forEach((idLine, line) -> {
             Map<String, Token> lineMap = lineReader(line.strip(), idLine);
             lineMap.forEach(
@@ -73,8 +82,6 @@ public class LexicalAnalyzer {
                     lexemes.add(new Lexeme(token, value, idLine));
                 });
         });
-        
-        return lexemes;
     }
 
     private Map<String, Token> lineReader(String line, Integer idLine) {

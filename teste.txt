@@ -9,7 +9,8 @@ BEGIN
     asdsd
     *)
     - 
-    2A SDA )29 ;444=12 $@ +10;
+    
+    1teste;
    -teste := -2;
     teste% + KSDA#
     easdadadfasdfasfa;

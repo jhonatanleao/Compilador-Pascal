@@ -1,23 +1,45 @@
 package Controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import Model.*;
-
-
+import Model.Erro;
+import Model.LexicalAnalyzer;
+import View.PrincipalLittlePascal;
 
 public class LexicalController {
-    public Map removeComments() throws IOException {
-        Path fileName = Path.of("teste.txt");
-        String content = Files.readString(fileName);
-        String[] lines = content.split("\n");      
+
+    PrincipalLittlePascal view;
+    LexicalAnalyzer lexicalAnalyzer;
+
+    public LexicalController(){
+        this.lexicalAnalyzer = new LexicalAnalyzer();
+        this.view = new PrincipalLittlePascal();
+        
+        this.view.getBtnCompile().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                analyze();
+                view.getTxaOutput().setText(update());
+            }
+
+        });
+
+        this.view.getBtnClear().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lexicalAnalyzer.clearLists();
+                view.getTxaOutput().setText("");
+                view.getTxaInput().setText("");
+            }
+        });
+    }
+
+    private Map<Integer, String> removeComments(String content){
         Map<Integer, String> code = new LinkedHashMap<>();
+        String[] lines = content.split("\n");  
         boolean lock = true;
 
         for(int i = 0; i < lines.length; i++){
@@ -32,17 +54,25 @@ public class LexicalController {
         return code;
     }
 
-    public void analyze() throws IOException{
-        Map<Integer, String> code = new LinkedHashMap<>();
-        code = removeComments();
-        LexicalAnalyzer lexicalAnalyzer = new  LexicalAnalyzer();
-        List<Lexeme> lexemes = lexicalAnalyzer.codeAnalizer(code);
-        for (Erro error : lexicalAnalyzer.getErrorList()) {
-            System.out.println(error.getType() + "\t" + error.getLexeme());    
-        }
+    private void analyze(){
+        String code = this.view.getTxaInput().getText();
+        this.lexicalAnalyzer.codeAnalizer(removeComments(code));
+    }
 
-        //lexicalAnalyzer.codeParser(lexemes);
+    private String update(){
+        String output = "";
+        if (this.lexicalAnalyzer.getErrorList().size() > 0){
+            for (Erro e : this.lexicalAnalyzer.getErrorList()) {
+                output += "".concat(e.getType()).concat("\n");
+                System.out.println(e.getType());
+            }
+        }
         
-    
+        return output;
+    }
+
+    public void init(){
+        this.view.setVisible(true);
+        this.view.setLocationRelativeTo(null);
     }
 }

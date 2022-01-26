@@ -100,11 +100,10 @@ public class PrincipalLittlePascal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnClearActionPerformed
 
 
@@ -118,5 +117,21 @@ public class PrincipalLittlePascal extends javax.swing.JFrame {
     private javax.swing.JLabel lblOutput;
     private javax.swing.JTextArea txaInput;
     private javax.swing.JTextArea txaOutput;
+
+    public javax.swing.JTextArea getTxaInput() {
+        return txaInput;
+    }
+
+    public javax.swing.JTextArea getTxaOutput() {
+        return txaOutput;
+    }
+    
+    public javax.swing.JButton getBtnCompile() {
+        return btnCompile;
+    }
+
+    public javax.swing.JButton getBtnClear() {
+        return btnClear;
+    }
     // End of variables declaration//GEN-END:variables
 }
