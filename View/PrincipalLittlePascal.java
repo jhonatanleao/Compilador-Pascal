@@ -2,136 +2,204 @@ package View;
 
 public class PrincipalLittlePascal extends javax.swing.JFrame {
 
-    public PrincipalLittlePascal() {
-        initComponents();
+        public PrincipalLittlePascal() {
+                initComponents();
 
-    }
+        }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+        private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btnClear = new javax.swing.JButton();
-        btnCompile = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txaInput = new javax.swing.JTextArea();
-        lblInput = new javax.swing.JLabel();
-        lblOutput = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txaOutput = new javax.swing.JTextArea();
+                jLabel1 = new javax.swing.JLabel();
+                jScrollPane4 = new javax.swing.JScrollPane();
+                lexameTable = new javax.swing.JTable();
+                jScrollPane2 = new javax.swing.JScrollPane();
+                txaOutput = new javax.swing.JTextArea();
+                btnClear = new javax.swing.JButton();
+                btnCompile = new javax.swing.JButton();
+                lblInput = new javax.swing.JLabel();
+                lblOutput = new javax.swing.JLabel();
+                jScrollPane1 = new javax.swing.JScrollPane();
+                txaInput = new javax.swing.JTextArea();
 
-        jLabel1.setText("jLabel1");
+                jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Analizador Léxico LittlePascal");
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setTitle("Analizador Lexico LittlePascal");
 
-        btnClear.setBackground(new java.awt.Color(255, 255, 255));
-        btnClear.setText("Clear");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
+                lexameTable.setModel(new javax.swing.table.DefaultTableModel(
+                                new Object[][] {
 
-        btnCompile.setBackground(new java.awt.Color(255, 255, 255));
-        btnCompile.setText("Compile");
-        btnCompile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompileActionPerformed(evt);
-            }
-        });
+                                },
+                                new String[] {
+                                                "Lexame", "Token", "Line", "Column"
+                                }));
+                lexameTable.setMaximumSize(new java.awt.Dimension(400, 2000));
+                jScrollPane4.setViewportView(lexameTable);
+                if (lexameTable.getColumnModel().getColumnCount() > 0) {
+                        lexameTable.getColumnModel().getColumn(0).setHeaderValue("Lexame");
+                        lexameTable.getColumnModel().getColumn(1).setHeaderValue("Token");
+                        lexameTable.getColumnModel().getColumn(2).setHeaderValue("Line");
+                        lexameTable.getColumnModel().getColumn(3).setHeaderValue("Column");
+                }
 
-        txaInput.setColumns(20);
-        txaInput.setRows(5);
-        jScrollPane1.setViewportView(txaInput);
+                txaOutput.setColumns(30);
+                txaOutput.setRows(5);
+                txaOutput.setFocusable(false);
+                txaOutput.setRequestFocusEnabled(false);
+                jScrollPane2.setViewportView(txaOutput);
 
-        lblInput.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblInput.setText("Input");
+                btnClear.setBackground(new java.awt.Color(255, 255, 255));
+                btnClear.setText("Clear");
+                btnClear.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnClearActionPerformed(evt);
+                        }
+                });
 
-        lblOutput.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblOutput.setText("Output");
+                btnCompile.setBackground(new java.awt.Color(255, 255, 255));
+                btnCompile.setText("Compile");
+                btnCompile.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnCompileActionPerformed(evt);
+                        }
+                });
 
-        txaOutput.setColumns(20);
-        txaOutput.setRows(5);
-        txaOutput.setFocusable(false);
-        jScrollPane2.setViewportView(txaOutput);
+                lblInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+                lblInput.setText("Input");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnCompile))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblInput)
-                            .addComponent(lblOutput))
-                        .addGap(50, 50, 50)))
-                .addGap(20, 20, 20))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblInput)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblOutput)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCompile)
-                    .addComponent(btnClear))
-                .addGap(20, 20, 20))
-        );
+                lblOutput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+                lblOutput.setText("Output");
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+                txaInput.setColumns(20);
+                txaInput.setRows(5);
+                txaInput.setMaximumSize(new java.awt.Dimension(600, 2147483647));
+                jScrollPane1.setViewportView(txaInput);
 
-    private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-       
-    }//GEN-LAST:event_btnCompileActionPerformed
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                                .addGap(20, 20, 20)
+                                                                .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(lblOutput)
+                                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                layout.createSequentialGroup()
+                                                                                                                .addGroup(layout.createParallelGroup(
+                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                                                                .addComponent(jScrollPane2)
+                                                                                                                                .addComponent(jScrollPane1,
+                                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                309,
+                                                                                                                                                Short.MAX_VALUE))
+                                                                                                                .addGap(15, 15, 15)))
+                                                                .addGap(3, 3, 3)
+                                                                .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                false)
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                                .addComponent(btnClear,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                163,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(35, 35, 35)
+                                                                                                .addComponent(btnCompile,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                .addComponent(jScrollPane4,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                0, Short.MAX_VALUE))
+                                                                .addGap(20, 20, 20))
+                                                .addGroup(layout.createSequentialGroup()
+                                                                .addGap(20, 20, 20)
+                                                                .addComponent(lblInput)
+                                                                .addGap(0, 0, 0)));
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-    }//GEN-LAST:event_btnClearActionPerformed
+                layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+                                new java.awt.Component[] { lblInput, lblOutput });
 
+                layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+                                new java.awt.Component[] { btnClear, btnCompile });
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnCompile;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblInput;
-    private javax.swing.JLabel lblOutput;
-    private javax.swing.JTextArea txaInput;
-    private javax.swing.JTextArea txaOutput;
+                layout.setVerticalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                                .addGap(15, 15, 15)
+                                                                .addComponent(lblInput)
+                                                                .addGap(15, 15, 15)
+                                                                .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                                .addComponent(jScrollPane1,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                400,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(15, 15, 15)
+                                                                                                .addComponent(lblOutput)
+                                                                                                .addGap(15, 15, 15)
+                                                                                                .addComponent(jScrollPane2))
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                                .addComponent(jScrollPane4,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                478,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                .addGap(45, 45, 45)
+                                                                                                .addGroup(layout.createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                                .addComponent(btnClear,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                79,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                                .addComponent(btnCompile,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                                79,
+                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addGap(15, 15, 15)));
 
-    public javax.swing.JTextArea getTxaInput() {
-        return txaInput;
-    }
+                pack();
+        }// </editor-fold>
 
-    public javax.swing.JTextArea getTxaOutput() {
-        return txaOutput;
-    }
-    
-    public javax.swing.JButton getBtnCompile() {
-        return btnCompile;
-    }
+        private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {
 
-    public javax.swing.JButton getBtnClear() {
-        return btnClear;
-    }
-    // End of variables declaration//GEN-END:variables
+        }
+
+        private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {
+
+        }
+
+        // Variables declaration - do not modify
+        private javax.swing.JButton btnClear;
+        private javax.swing.JButton btnCompile;
+        private javax.swing.JLabel jLabel1;
+        private javax.swing.JScrollPane jScrollPane1;
+        private javax.swing.JScrollPane jScrollPane2;
+        private javax.swing.JScrollPane jScrollPane4;
+        private javax.swing.JLabel lblInput;
+        private javax.swing.JLabel lblOutput;
+        private javax.swing.JTable lexameTable;
+        private javax.swing.JTextArea txaInput;
+        private javax.swing.JTextArea txaOutput;
+
+        public javax.swing.JTextArea getTxaInput() {
+                return txaInput;
+        }
+
+        public javax.swing.JTextArea getTxaOutput() {
+                return txaOutput;
+        }
+
+        public javax.swing.JButton getBtnCompile() {
+                return btnCompile;
+        }
+
+        public javax.swing.JButton getBtnClear() {
+                return btnClear;
+        }
+
+        public javax.swing.JTable getLexameTable() {
+                return lexameTable;
+        }
+        // End of variables declaration
 }
