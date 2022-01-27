@@ -5,11 +5,13 @@ public class Lexeme {
     private Token token;
     private String value;
     private int line;
+    private int column;
 
-    public Lexeme(Token token, String value, int line){
+    public Lexeme(Token token, String value, int line, int column){
         this.token = token;
         this.value = value;
         this.line = line;
+        this.column = column;
     }
 
     public Token getToken() {
@@ -35,6 +37,14 @@ public class Lexeme {
         this.line = line;
     }
 
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
     @Override
     public String toString() {
         return "token: " 
@@ -42,6 +52,9 @@ public class Lexeme {
                 + "; value: " 
                 + getValue()
                 + "; line: "
-                + getLine();
+                + getLine()
+                + "; column: "
+                + getColumn()
+                + "\n";
     }
 }

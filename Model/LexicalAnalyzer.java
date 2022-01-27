@@ -75,13 +75,17 @@ public class LexicalAnalyzer {
     }
 
     public void codeAnalizer(Map<Integer, String> code) {
-        code.forEach((idLine, line) -> {
-            Map<String, Token> lineMap = lineReader(line.strip(), idLine);
-            lineMap.forEach(
-                (value, token) -> {
-                    lexemes.add(new Lexeme(token, value, idLine));
-                });
-        });
+        int cont;
+        for (Map.Entry<Integer, String> codeEntry : code.entrySet()) {
+            Map<String,Token> lineMap = lineReader(codeEntry.getValue(), codeEntry.getKey());
+            cont = 0;
+            for (Map.Entry<String, Token> lineEntry : lineMap.entrySet()){               
+                if(lineEntry.getValue() != null){                   
+                    lexemes.add(new Lexeme(lineEntry.getValue(), lineEntry.getKey(), codeEntry.getKey(),  cont));
+                    cont += lineEntry.getKey().length() + 1;
+                }
+            }
+        }
     }
 
     private Map<String, Token> lineReader(String line, Integer idLine) {
