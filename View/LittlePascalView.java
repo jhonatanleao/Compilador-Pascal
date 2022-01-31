@@ -1,8 +1,8 @@
 package View;
 
-public class PrincipalLittlePascal extends javax.swing.JFrame {
+public class LittlePascalView extends javax.swing.JFrame {
 
-        public PrincipalLittlePascal() {
+        public LittlePascalView() {
                 initComponents();
 
         }

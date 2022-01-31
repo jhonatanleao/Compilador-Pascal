@@ -12,18 +12,18 @@ import Model.ColorLineTable;
 import Model.Erro;
 import Model.Lexeme;
 import Model.LexicalAnalyzer;
-import View.PrincipalLittlePascal;
+import View.LittlePascalView;
 
 public class LexicalController {
 
-    PrincipalLittlePascal view;
+    LittlePascalView view;
     LexicalAnalyzer lexicalAnalyzer;
     DefaultTableModel tblLexemes;
     ColorLineTable colorLine;
 
     public LexicalController() {
         this.lexicalAnalyzer = new LexicalAnalyzer();
-        this.view = new PrincipalLittlePascal();
+        this.view = new LittlePascalView();
         this.tblLexemes = new DefaultTableModel();
         this.colorLine = new ColorLineTable();
 
