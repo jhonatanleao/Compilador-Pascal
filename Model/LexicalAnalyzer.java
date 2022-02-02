@@ -125,17 +125,17 @@ public class LexicalAnalyzer {
         String error = "";
         Integer id = getErrorList().size() + 1;
         if (moreThanFifteen){
-            error = "String with more than 15 characters in line %1$d, column %2$d";
+            error = "String com mais de 15 caracteres na %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
        
         if(token == Token.INVALID_CARACTERE){
-            error = "String contains invalid characters in line %1$d, column %2$d";
+            error = "Identificador contém caracteres inválidos na linha %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
         if(token == Token.BEGIN_INVALID){
-            error = "Invalid begin for declaration in line %1$d, column %2$d";
+            error = "Identificador começa de forma inválida %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
