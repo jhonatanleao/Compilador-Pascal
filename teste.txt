@@ -17,3 +17,17 @@ BEGIN
     -0.0$;
     { abre_comentario }
 END.
+
+
+PROGRAM hello;
+VAR 
+    teste1 : INTEGER;
+    teste2 : INTEGER;
+    teste3 : INTEGER;
+BEGIN
+
+    teste1 := -2;
+    teste2 := -1;
+    teste3 := teste1 + teste2;
+    
+END.
