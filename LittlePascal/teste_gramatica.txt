@@ -1,0 +1,28 @@
+PROGRAM hello_world;
+
+CONST
+size = 10;
+label = 'peso';
+weight = 60.9;
+VAR
+x : REAL;
+l : INTEGER;
+
+FUNCTION MultiplicaPeso(x : REAL, y : INTEGER) : REAL;
+BEGIN
+MultiplicaPeso := x * y; 
+END;
+
+PROCEDURE ImprimePeso;
+VAR
+x : INTEGER;
+BEGIN
+WRITELN('Peso: ', x + x);
+END;
+
+BEGIN
+x := 10;
+y := 12;
+x := MultiplicaPeso(x, y);
+Imprimepeso;
+END.
