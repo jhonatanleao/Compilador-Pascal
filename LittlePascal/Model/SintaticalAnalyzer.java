@@ -56,6 +56,7 @@ public class SintaticalAnalyzer {
     private void declaracaoConstante(){
        // if(lexemes.get(index).getValue().equals('CONST')){
        //     readLexeme();
+       //
        //     declConstList(); 
        // }
     }
