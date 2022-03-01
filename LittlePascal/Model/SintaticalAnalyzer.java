@@ -50,6 +50,7 @@ public class SintaticalAnalyzer {
        // declaracaoVariavel();
        // declaracaoConstante();
        // declaracaoProcedimento();
+
     }
 
     private void declaracaoConstante(){
