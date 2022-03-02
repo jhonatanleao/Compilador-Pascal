@@ -125,19 +125,29 @@ public class SintaticalAnalyzer {
     }
 
     private void expr(){
-
+        exprComparacao();
+        expr2();
     }
    
     private void expr2(){
-
+        readLexeme();
+        if('OPERADOR_LOGICO_OUOPERADOR_LOGICO_E'.contains(lexemes.get(index).getToken()){
+            exprComparacao();
+            expr2();
+        }
     }
 
     private void exprComparacao(){
-
+        exprOp();
+        exprComparacao2();
     }
     
     private void exprComparacao2(){
-
+        readLexeme();
+        if(.contains(lexemes.get(index).getToken()){
+            exprOp();
+            exprComparacao2();
+        }
     }
     
     private void exprOp(){
@@ -145,7 +155,8 @@ public class SintaticalAnalyzer {
     }
 
     private void termo(){
-        
+       unario();
+       termo2();
     }
 
     private void exprOp2(){
@@ -157,22 +168,45 @@ public class SintaticalAnalyzer {
     }
 
     private void unario(){
-       // readLexeme();
-       // if('MAISMENOS'.lexemes.get(index).getToken()){
-       //     fator();
-       // }else{
+        readLexeme();
+        if('MAISMENOS'.contains(lexemes.get(index).getToken())){
+            fator();
+        }else{
             fator();
         }
     }
 
-    private void fator(){
-       // if(!tipo.contains(lexemes.get(index).getValue()) && !lexemes.get(index).getToken().equals('INVALID_CARACTERE')))){
-       //    variavel(); 
-       // }
+    private boolean fator(){
+        if(lexemes.get(index).getToken().equals('PARENTESE_ESQUERDO')){
+            expr();
+            if(lexemes.get(index).getToken().equals('PARENTESE_DIREITO')){
+                return true;     
+            }
+        }
     }
 
     private void variavel(){
-        
+        if (lexemes.get(index).getToken().equals('IDENTIFICADOR'))
+            exprOp();    
     }
 
+    private boolean num(){
+        if ('REALINTEIRO'.contains(lexemes.get(index).getToken()))
+            return true;
+        else
+            return false;
+    }
 
+    private boolean id(){
+        if (lexemes.get(index).getToken().equals('IDENTIFICADOR'))
+            return true;
+        else 
+            return false;
+    }
+
+    private boolean literal(){
+        if (lexemes.get(index).getToken().equals('STRING'))
+            return true;
+        else 
+            return false;
+    }

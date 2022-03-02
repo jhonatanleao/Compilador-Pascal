@@ -33,5 +33,6 @@ public enum Token {
     BEGIN_INVALID,
     INVALID,
     ONLY_NUMBER
-    
+    OPERADOR_LOGICO_E,
+    OOPERADOR_LOGICO_OU
 }
