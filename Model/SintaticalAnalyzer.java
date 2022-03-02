@@ -7,11 +7,21 @@ public class SintaticalAnalyzer {
     private List<Lexeme> lexemes;
     private String tipo;
     private Integer index;
+    private String operador_mais_menos;
+    private String tipo_numerico;
+    private String operador_numerico;
+    private String operador_divisao_multiplicacao;
+    private String operador_logico;
 
     public SintaticalAnalyzer(List<Lexeme> lexemes){
         this.lexemes = lexemes;
         this.index = 0;
-        this.tipo = 'INTEGERREALCHARSTRING';
+        this.tipo = "INTEGER REAL CHAR STRING";
+        this.operador_mais_menos = "MAIS MENOS";
+        this.tipo_numerico = "REAL INTEIRO";
+        this.operador_numerico = "IGUALDADE DIFERENTE MENOR MENOR_IGUAL MAIOR MAIOR_IGUAL";
+        this.operador_divisao_multiplicacao = "DIVISAO MULTIPLICACAO";
+        this.operador_logico = "OPERADOR_LOGICO_OU OPERADOR_LOGICO_E";
     }
 
     private void readLexeme(){
@@ -131,7 +141,7 @@ public class SintaticalAnalyzer {
    
     private void expr2(){
         readLexeme();
-        if('OPERADOR_LOGICO_OUOPERADOR_LOGICO_E'.contains(lexemes.get(index).getToken()){
+        if(operador_logico.contains(lexemes.get(index).getToken()){
             exprComparacao();
             expr2();
         }
@@ -144,14 +154,15 @@ public class SintaticalAnalyzer {
     
     private void exprComparacao2(){
         readLexeme();
-        if(.contains(lexemes.get(index).getToken()){
+        if(operador_numerico.contains(lexemes.get(index).getToken().toString())){
             exprOp();
             exprComparacao2();
         }
     }
     
     private void exprOp(){
-        
+       termo();
+       exprOp2();
     }
 
     private void termo(){
@@ -160,53 +171,68 @@ public class SintaticalAnalyzer {
     }
 
     private void exprOp2(){
-
+        readLexeme();
+        if(operador_mais_menos.contains(lexemes.get(index).getToken().toString())){
+            termo();
+            exprOp2();
+        }
     }
 
     private void termo2(){
-
+        readLexeme();
+        if(operador_divisao_multiplicacao.contains(lexemes.get(index).getToken().toString())){
+            unario();
+            termo2();
+        }
     }
 
     private void unario(){
         readLexeme();
-        if('MAISMENOS'.contains(lexemes.get(index).getToken())){
+        if(operador_mais_menos.contains(lexemes.get(index).getToken().toString())){
             fator();
         }else{
             fator();
         }
     }
 
-    private boolean fator(){
-        if(lexemes.get(index).getToken().equals('PARENTESE_ESQUERDO')){
+    private void fator(){
+        if(lexemes.get(index).getToken().equals(Token.PARENTESE_ESQUERDO)){
             expr();
-            if(lexemes.get(index).getToken().equals('PARENTESE_DIREITO')){
-                return true;     
+            if(lexemes.get(index).getToken().equals(Token.PARENTESE_DIREITO)){
+                System.out.println("Erro");
             }
+        }
+
+        if(!tipo.contains(lexemes.get(index).getToken().toString()) && !lexemes.get(index).getToken().equals(Token.INVALID_CARACTERE)){
+           variavel();
+        }else{
+            System.out.println("Erro");
         }
     }
 
     private void variavel(){
-        if (lexemes.get(index).getToken().equals('IDENTIFICADOR'))
+        if (lexemes.get(index).getToken().equals(Token.IDENTIFICADOR))
             exprOp();    
     }
 
     private boolean num(){
-        if ('REALINTEIRO'.contains(lexemes.get(index).getToken()))
+        if (tipo_numerico.contains(lexemes.get(index).getToken().toString()))
             return true;
         else
             return false;
     }
 
     private boolean id(){
-        if (lexemes.get(index).getToken().equals('IDENTIFICADOR'))
+        if (lexemes.get(index).getToken().equals(Token.IDENTIFICADOR))
             return true;
         else 
             return false;
     }
 
     private boolean literal(){
-        if (lexemes.get(index).getToken().equals('STRING'))
+        if (lexemes.get(index).getToken().equals(Token.STRING))
             return true;
         else 
             return false;
     }
+}
