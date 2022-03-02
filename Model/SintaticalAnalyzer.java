@@ -2,6 +2,8 @@ package Model;
 
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
+
 public class SintaticalAnalyzer {
     
     private List<Lexeme> lexemes;
@@ -57,7 +59,7 @@ public class SintaticalAnalyzer {
     }
 
     private void declaracoes(){
-       // declaracaoVariavel();
+        declaracaoVariavel();
        // declaracaoConstante();
        // declaracaoProcedimento();
 
@@ -89,15 +91,30 @@ public class SintaticalAnalyzer {
     }
     
     private void declaracaoVariavel(){
-
+        readLexeme();
+        if (!lexemes.get(index).getToken().equals(Token.INVALID_CARACTERE)) {
+            declVarList();
+        }
     }
     
     private void declVarList(){
-
+        delcVar();
+        declConstList();
     }
     
     private void delcVar(){
-
+        readLexeme();
+        variavel();
+        conjuntoIds();
+        if (lexemes.get(index).getToken().equals(Token.DOIS_PONTOS)) {
+            readLexeme();
+            if (tipo.contains(lexemes.get(index).getToken().toString())) {
+                readLexeme();
+                if (!lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)) {
+                    System.out.println("Erro");
+                }
+            }
+        }
     }
 
     private void conjuntoIds(){
@@ -119,7 +136,7 @@ public class SintaticalAnalyzer {
     }
 
     private void parametros(){
-
+        declVarList();
     }
 
     private void instrucoes(){
@@ -127,11 +144,11 @@ public class SintaticalAnalyzer {
     }
 
     private void inst(){
-
+        
     }
 
     private void parametros2(){
-
+        readLexeme();
     }
 
     private void expr(){
@@ -141,7 +158,7 @@ public class SintaticalAnalyzer {
    
     private void expr2(){
         readLexeme();
-        if(operador_logico.contains(lexemes.get(index).getToken()){
+        if(operador_logico.contains(lexemes.get(index).getToken().toString())){
             exprComparacao();
             expr2();
         }
