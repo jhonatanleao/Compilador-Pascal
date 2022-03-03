@@ -31,7 +31,7 @@ public class SintaticalAnalyzer {
             index++;
         }
     }
-
+  
     private void programa(){      
         if(lexemes.get(index).getValue().equals("PROGRAM")){
             readLexeme();
@@ -74,7 +74,7 @@ public class SintaticalAnalyzer {
             }
         }
     }
-
+  
     private void declaracoes(){
         declaracaoVariavel();
         declaracaoConstante();
