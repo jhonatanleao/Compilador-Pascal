@@ -34,5 +34,5 @@ public enum Token {
     INVALID,
     ONLY_NUMBER,
     OPERADOR_LOGICO_E,
-    OOPERADOR_LOGICO_OU
+    OPERADOR_LOGICO_OU
 }

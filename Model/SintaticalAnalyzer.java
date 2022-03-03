@@ -33,31 +33,35 @@ public class SintaticalAnalyzer {
     }
 
     private void programa(){     
-       // Lexeme lexeme = new Lexeme()
-       // boolean state = false;
-       // if(lexemes.get(index).getValue().equals('PROGRAM')){
-       //     readLexeme();
-       //     if(lexemes.get(index).getToken().equals('IDENTIFICADOR')){
-       //         readLexeme();
-       //         if((lexemes.get(index).getToken().equals('PONTO_VIRGULA')){
-       //             readLexeme();
-       //             declaracoes();
-       //             if((lexemes.get(index).getValue().equals('BEGIN')){
-       //                 instrucoes();
-       //                 if((lexemes.get(index).getValue().equals('END.')){
-       //                     System.out.println('FIM');        
-       //                 } 
-       //         }else{
-       //             System.out.println('Erro: Está faltando identificador PONTO_VIRGULA');
-       //         }
-       //     }else{
-       //         System.out.println('Erro: IDENTIFICADOR iválido.');
-       //     }
-       // }else{
-       //     System.out.println('Erro: Está faltando identificador PROGRAM.');
-       // }
+        
+        boolean state = false;
+        if(lexemes.get(index).getValue().equals("PROGRAM")){
+            readLexeme();
+            if(lexemes.get(index).getToken().equals(Token.IDENTIFICADOR)){
+                readLexeme();
+                if((lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA))){
+                    readLexeme();
+                    declaracoes();
+                    if((lexemes.get(index).getValue().equals("BEGIN"))){
+                        instrucoes();
+                        if((lexemes.get(index).getValue().equals("END."))){
+                            System.out.println("FIM");        
+                        }else{
+                            System.out.println("Erro: Está faltando identificador PONTO_VIRGULA");
+                        }
+                    }else{
+                        System.out.println("Erro: IDENTIFICADOR iválido.");
+                    }
+                }else{
+                    System.out.println("Erro: Está faltando identificador PROGRAM.");
+                }
+            }else{
+                System.out.println("Erro");
+            }
+        }else{
+                System.out.println("Erro");
+        }
     }
-
     private void declaracoes(){
         declaracaoVariavel();
        // declaracaoConstante();
@@ -66,7 +70,7 @@ public class SintaticalAnalyzer {
     }
 
     private void declaracaoConstante(){
-       // if(lexemes.get(index).getValue().equals('CONST')){
+       // if(lexemes.get(index).getValue().equals("CONST")){
        //     readLexeme();
        //
        //     declConstList(); 
@@ -74,13 +78,13 @@ public class SintaticalAnalyzer {
     }
 
     private void declConstList(){
-       //  if(lexemes.get(index).getToken().equals('IDENTIFICADOR')){
+       //  if(lexemes.get(index).getToken().equals("IDENTIFICADOR")){
        //     readLexeme();
-       //     if(lexemes.get(index).getValue().equals('DOIS_PONTOS')){
+       //     if(lexemes.get(index).getValue().equals("DOIS_PONTOS")){
        //         readLexeme();
        //         if(tipo.contains(lexemes.get(index).getValue())){
        //             readLexeme();
-       //             if(lexemes.get(index).getValue().equals('IGUALDADE')){
+       //             if(lexemes.get(index).getValue().equals("IGUALDADE")){
        //                 readLexeme();
        //                 valor();
        //                 
@@ -122,7 +126,7 @@ public class SintaticalAnalyzer {
     }
     
     private void valor(){
-       // if(!lexemes.get(index).getToken().equals('STRING') && !lexemes.get(index).getToken().equals('INVALID_CARACTERE'))){
+       // if(!lexemes.get(index).getToken().equals("STRING") && !lexemes.get(index).getToken().equals("INVALID_CARACTERE"))){
        //    unario();
        // }
     }
