@@ -14,13 +14,9 @@ public class SintaticalAnalyzer {
     private String operador_numerico;
     private String operador_divisao_multiplicacao;
     private String operador_logico;
-<<<<<<< HEAD
+    private String funcao_procedure;
 
     public SintaticalAnalyzer(List<Lexeme> lexemes) {
-=======
-    private String funcao_procedure;
-    public SintaticalAnalyzer(List<Lexeme> lexemes){
->>>>>>> master
         this.lexemes = lexemes;
         this.index = 0;
         this.tipo = "INTEGER REAL CHAR STRING";
@@ -37,167 +33,102 @@ public class SintaticalAnalyzer {
             index++;
         }
     }
-    
-    private String getLexemeValue(int index){
+
+    private String getLexemeValue(int index) {
         return lexemes.get(index).getValue();
     }
 
-<<<<<<< HEAD
-    private void programa() {
-        // Lexeme lexeme = new Lexeme()
-        // boolean state = false;
-        // if(lexemes.get(index).getValue().equals('PROGRAM')){
-        // readLexeme();
-        // if(lexemes.get(index).getToken().equals('IDENTIFICADOR')){
-        // readLexeme();
-        // if((lexemes.get(index).getToken().equals('PONTO_VIRGULA')){
-        // readLexeme();
-        // declaracoes();
-        // if((lexemes.get(index).getValue().equals('BEGIN')){
-        // instrucoes();
-        // if((lexemes.get(index).getValue().equals('END.')){
-        // System.out.println('FIM');
-        // }
-        // }else{
-        // System.out.println('Erro: Está faltando identificador PONTO_VIRGULA');
-        // }
-        // }else{
-        // System.out.println('Erro: IDENTIFICADOR iválido.');
-        // }
-        // }else{
-        // System.out.println('Erro: Está faltando identificador PROGRAM.');
-        // }
-    }
-
-    private void declaracoes() {
-        declaracaoVariavel();
-        // declaracaoConstante();
-        // declaracaoProcedimento();
-
-    }
-
-    private void declaracaoConstante() {
-        // if(lexemes.get(index).getValue().equals('CONST')){
-        // readLexeme();
-        //
-        // declConstList();
-        // }
-    }
-
-    private void declConstList() {
-        // if(lexemes.get(index).getToken().equals('IDENTIFICADOR')){
-        // readLexeme();
-        // if(lexemes.get(index).getValue().equals('DOIS_PONTOS')){
-        // readLexeme();
-        // if(tipo.contains(lexemes.get(index).getValue())){
-        // readLexeme();
-        // if(lexemes.get(index).getValue().equals('IGUALDADE')){
-        // readLexeme();
-        // valor();
-        //
-        // }
-        // }
-        // }
-        // }
-    }
-
-    private void declaracaoVariavel() {
-        readLexeme();
-        if (!lexemes.get(index).getToken().equals(Token.INVALID_CARACTERE)) {
-=======
-    private Token getLexemeToken(int index){
+    private Token getLexemeToken(int index) {
         return lexemes.get(index).getToken();
     }
 
-
-    private void programa(){      
-        if(getLexemeValue(index).equals("PROGRAM")){
+    private void programa() {
+        if (getLexemeValue(index).equals("PROGRAM")) {
             readLexeme();
-            if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
-                 readLexeme();
-                if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
+            if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
+                readLexeme();
+                if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                     readLexeme();
                     declaracoes();
-                    if(getLexemeValue(index).equals("BEGIN")){
+                    if (getLexemeValue(index).equals("BEGIN")) {
                         instrucoes();
-                        if(getLexemeValue(index).equals("END.")){
-                            System.out.println("FIM");        
-                        } else{
+                        if (getLexemeValue(index).equals("END.")) {
+                            System.out.println("FIM");
+                        } else {
                             System.out.println("Erro END.");
-                        } 
-                    }else{
+                        }
+                    } else {
                         System.out.println("Erro BEGIN");
-                    }   
-                }else{
+                    }
+                } else {
                     System.out.println("Erro PONTO_VIRGULA");
                 }
-            }else{
+            } else {
                 System.out.println("Erro IDENTIFICADOR");
             }
-        }else{
+        } else {
             System.out.println("Erro PROGRAM");
         }
     }
-    
-    private void bloco(){
+
+    private void bloco() {
         readLexeme();
-        if(getLexemeValue(index).equals("BEGIN")){
+        if (getLexemeValue(index).equals("BEGIN")) {
             instrucoes();
             readLexeme();
-            if(getLexemeValue(index).equals("END")){
+            if (getLexemeValue(index).equals("END")) {
                 readLexeme();
-                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
+                if (!getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                     System.out.println("Erro PONTO_VIRGULA");
                 }
             }
         }
     }
-  
-    private void declaracoes(){
+
+    private void declaracoes() {
         declaracaoVariavel();
         declaracaoConstante();
         declaracaoProcedimento();
 
     }
 
-    private void declaracaoConstante(){
-        if(getLexemeValue(index).equals("CONST")){
-            readLexeme(); 
-            declConstList(); 
+    private void declaracaoConstante() {
+        if (getLexemeValue(index).equals("CONST")) {
+            readLexeme();
+            declConstList();
         }
     }
 
-    private void declConstList(){
-        if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
+    private void declConstList() {
+        if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
             readLexeme();
-            if(getLexemeToken(index).equals(Token.DOIS_PONTOS)){
+            if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                 readLexeme();
-                if(tipo.contains(getLexemeValue(index))){
+                if (tipo.contains(getLexemeValue(index))) {
                     readLexeme();
-                    if(getLexemeToken(index).equals(Token.IGUALDADE)){
+                    if (getLexemeToken(index).equals(Token.IGUALDADE)) {
                         readLexeme();
                         valor();
-                        if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
+                        if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                             readLexeme();
                             declConstList();
                         }
-                    } 
-                } 
-            }else if(getLexemeToken(index).equals(Token.IGUALDADE)){
+                    }
+                }
+            } else if (getLexemeToken(index).equals(Token.IGUALDADE)) {
                 readLexeme();
                 valor();
-                if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
+                if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                     readLexeme();
                     declConstList();
                 }
             }
         }
     }
-    
-    private void declaracaoVariavel(){
+
+    private void declaracaoVariavel() {
         if (getLexemeValue(index).equals("VAR")) {
             readLexeme();
->>>>>>> master
             declVarList();
         }
     }
@@ -209,7 +140,7 @@ public class SintaticalAnalyzer {
 
     private void delcVar() {
         readLexeme();
-        if (variavel()){
+        if (variavel()) {
             conjuntoIds();
             readLexeme();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
@@ -221,114 +152,79 @@ public class SintaticalAnalyzer {
                     }
                 }
             }
-        } 
+        }
     }
 
-<<<<<<< HEAD
     private void conjuntoIds() {
         readLexeme();
-        variavel();
-
+        if (getLexemeToken(index).equals(Token.VIRGULA)) {
+            readLexeme();
+            if (variavel()) {
+                conjuntoIds();
+            }
+        }
     }
 
     private void valor() {
-        // if(!lexemes.get(index).getToken().equals('STRING') &&
-        // !lexemes.get(index).getToken().equals('INVALID_CARACTERE'))){
-        // unario();
-        // }
+        if (getLexemeToken(index).equals("LITERAL")) {
+            readLexeme();
+        } else {
+            unario();
+        }
     }
 
     private void declaracaoProcedimento() {
         declProc();
-        
-
-    }
-
-    private void declProc() {
-        readLexeme();
-        if (lexemes.get(index).getToken().equals(Token.PALAVRA_CHAVE)) {
-
-
-        }
-
-=======
-    private void conjuntoIds(){
-        readLexeme();
-        if (getLexemeToken(index).equals(Token.VIRGULA)){
-            readLexeme();
-            if (variavel()) {
-                conjuntoIds();
-            } 
-        }
-    }
-    
-    private void valor(){
-        if(getLexemeToken(index).equals("LITERAL"){
-            readLexeme();
-        }else{
-            unario(); 
-        }
-    }
-    
-    private void declaracaoProcedimento(){
-        declProc();
         declaracaoProcedimento();
     }
 
-    private void declProc(){
+    private void declProc() {
         boolean isProcedute = false;
         readLexeme();
-        if (funcao_procedure.contains(getLexemeValue(index))){
+        if (funcao_procedure.contains(getLexemeValue(index))) {
             readLexeme();
-            if (getLexemeValue(index).equals("PROCEDURE")){
+            if (getLexemeValue(index).equals("PROCEDURE")) {
                 isProcedute = true;
             }
-            if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
+            if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
                 readLexeme();
-                if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+                if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)) {
                     parametros();
-                    if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
+                    if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)) {
                         readLexeme();
-                        if(isProcedute){
-                            if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
-                               declaracaoVariavel();
-                               bloco();
-                            } 
-                        }else{
-                            if (getLexemeToken(index).equals(Token.DOIS_PONTOS)){
+                        if (isProcedute) {
+                            if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
+                                declaracaoVariavel();
+                                bloco();
+                            }
+                        } else {
+                            if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                                 readLexeme();
-                                if (tipo.contains(getLexemeValue(index))){
+                                if (tipo.contains(getLexemeValue(index))) {
                                     if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                                         declaracaoVariavel();
                                         bloco();
                                     }
                                 }
-                            }      
-                        }    
+                            }
+                        }
                     }
                 }
             }
         }
->>>>>>> master
     }
 
     private void parametros() {
         declVarList();
     }
 
-<<<<<<< HEAD
     private void instrucoes() {
-
-=======
-    private void instrucoes(){
         inst();
         instrucoes();
->>>>>>> master
     }
 
     private void inst() {
 
-        
     }
 
     private void parametros2() {
@@ -342,11 +238,7 @@ public class SintaticalAnalyzer {
 
     private void expr2() {
         readLexeme();
-<<<<<<< HEAD
-        if (operador_logico.contains(lexemes.get(index).getToken().toString())) {
-=======
-        if(operador_logico.contains(getLexemeValue(index))){
->>>>>>> master
+        if (operador_logico.contains(getLexemeValue(index))) {
             exprComparacao();
             expr2();
         }
@@ -359,11 +251,7 @@ public class SintaticalAnalyzer {
 
     private void exprComparacao2() {
         readLexeme();
-<<<<<<< HEAD
-        if (operador_numerico.contains(lexemes.get(index).getToken().toString())) {
-=======
-        if(operador_numerico.contains(getLexemeToken(index).toString())){
->>>>>>> master
+        if (operador_numerico.contains(getLexemeToken(index).toString())) {
             exprOp();
             exprComparacao2();
         }
@@ -381,11 +269,7 @@ public class SintaticalAnalyzer {
 
     private void exprOp2() {
         readLexeme();
-<<<<<<< HEAD
-        if (operador_mais_menos.contains(lexemes.get(index).getToken().toString())) {
-=======
-        if(operador_mais_menos.contains(getLexemeToken(index).toString())){
->>>>>>> master
+        if (operador_mais_menos.contains(getLexemeToken(index).toString())) {
             termo();
             exprOp2();
         }
@@ -393,11 +277,7 @@ public class SintaticalAnalyzer {
 
     private void termo2() {
         readLexeme();
-<<<<<<< HEAD
-        if (operador_divisao_multiplicacao.contains(lexemes.get(index).getToken().toString())) {
-=======
-        if(operador_divisao_multiplicacao.contains(getLexemeToken(index).toString())){
->>>>>>> master
+        if (operador_divisao_multiplicacao.contains(getLexemeToken(index).toString())) {
             unario();
             termo2();
         }
@@ -405,90 +285,52 @@ public class SintaticalAnalyzer {
 
     private void unario() {
         readLexeme();
-<<<<<<< HEAD
-        if (operador_mais_menos.contains(lexemes.get(index).getToken().toString())) {
-=======
-        if(operador_mais_menos.contains(getLexemeToken(index).toString())){
->>>>>>> master
+        if (operador_mais_menos.contains(getLexemeToken(index).toString())) {
             fator();
         } else {
             fator();
         }
     }
 
-<<<<<<< HEAD
     private void fator() {
-        if (lexemes.get(index).getToken().equals(Token.PARENTESE_ESQUERDO)) {
+        if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)) {
             expr();
-            if (lexemes.get(index).getToken().equals(Token.PARENTESE_DIREITO)) {
-=======
-    private void fator(){
-        if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
-            expr();
-            if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
->>>>>>> master
+            if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)) {
                 System.out.println("Erro");
             }
         }
 
-<<<<<<< HEAD
-        if (!tipo.contains(lexemes.get(index).getToken().toString())
-                && !lexemes.get(index).getToken().equals(Token.INVALID_CARACTERE)) {
+        if (!tipo.contains(getLexemeToken(index).toString())
+                && !getLexemeToken(index).equals(Token.INVALID_CARACTERE)) {
             variavel();
         } else {
             System.out.println("Erro");
         }
     }
 
-    private void variavel() {
-        if (lexemes.get(index).getToken().equals(Token.IDENTIFICADOR))
-            exprOp();
+    private boolean variavel() {
+        if (getLexemeToken(index).equals(Token.IDENTIFICADOR))
+            return true;
+        else
+            return false;
     }
 
     private boolean num() {
-        if (tipo_numerico.contains(lexemes.get(index).getToken().toString()))
-=======
-        if(!tipo.contains(getLexemeToken(index).toString()) && !getLexemeToken(index).equals(Token.INVALID_CARACTERE)){
-           variavel();
-        }else{
-            System.out.println("Erro");
-        }
-    }
-    
-    private boolean variavel(){
-        if (getLexemeToken(index).equals(Token.IDENTIFICADOR))
-            return true;
-        else
-            return false;
-    }
-
-    private boolean num(){
         if (tipo_numerico.contains(getLexemeToken(index).toString()))
->>>>>>> master
             return true;
         else
             return false;
     }
 
-<<<<<<< HEAD
     private boolean id() {
-        if (lexemes.get(index).getToken().equals(Token.IDENTIFICADOR))
-=======
-    private boolean id(){
         if (getLexemeToken(index).equals(Token.IDENTIFICADOR))
->>>>>>> master
             return true;
         else
             return false;
     }
 
-<<<<<<< HEAD
     private boolean literal() {
-        if (lexemes.get(index).getToken().equals(Token.STRING))
-=======
-    private boolean literal(){
         if (getLexemeToken(index).equals(Token.STRING))
->>>>>>> master
             return true;
         else
             return false;
