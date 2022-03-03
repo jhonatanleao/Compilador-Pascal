@@ -31,72 +31,94 @@ public class SintaticalAnalyzer {
             index++;
         }
     }
-
-    private void programa(){     
-        
-        boolean state = false;
+  
+    private void programa(){      
         if(lexemes.get(index).getValue().equals("PROGRAM")){
             readLexeme();
             if(lexemes.get(index).getToken().equals(Token.IDENTIFICADOR)){
-                readLexeme();
-                if((lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA))){
+                 readLexeme();
+                if(lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)){
                     readLexeme();
                     declaracoes();
-                    if((lexemes.get(index).getValue().equals("BEGIN"))){
+                    if(lexemes.get(index).getValue().equals("BEGIN")){
                         instrucoes();
-                        if((lexemes.get(index).getValue().equals("END."))){
+                        if(lexemes.get(index).getValue().equals("END.")){
                             System.out.println("FIM");        
-                        }else{
-                            System.out.println("Erro: Está faltando identificador PONTO_VIRGULA");
-                        }
+                        } else{
+                            System.out.println("Erro END.");
+                        } 
                     }else{
-                        System.out.println("Erro: IDENTIFICADOR iválido.");
-                    }
+                        System.out.println("Erro BEGIN");
+                    }   
                 }else{
-                    System.out.println("Erro: Está faltando identificador PROGRAM.");
+                    System.out.println("Erro PONTO_VIRGULA");
                 }
             }else{
-                System.out.println("Erro");
+                System.out.println("Erro IDENTIFICADOR");
             }
         }else{
-                System.out.println("Erro");
+            System.out.println("Erro PROGRAM");
         }
     }
+    
+    private void bloco(){
+        readLexeme();
+        if(lexemes.get(index).getValue().equals("BEGIN")){
+            instrucoes();
+            readLexeme();
+            if(lexemes.get(index).getValue().equals("END")){
+                readLexeme();
+                if(!lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)){
+                    System.out.println("Erro PONTO_VIRGULA");
+                }
+            }
+        }
+    }
+  
     private void declaracoes(){
         declaracaoVariavel();
-       // declaracaoConstante();
-       // declaracaoProcedimento();
+        declaracaoConstante();
+        declaracaoProcedimento();
 
     }
 
     private void declaracaoConstante(){
-       // if(lexemes.get(index).getValue().equals("CONST")){
-       //     readLexeme();
-       //
-       //     declConstList(); 
-       // }
+        if(lexemes.get(index).getValue().equals("CONST")){
+            readLexeme(); 
+            declConstList(); 
+        }
     }
 
     private void declConstList(){
-       //  if(lexemes.get(index).getToken().equals("IDENTIFICADOR")){
-       //     readLexeme();
-       //     if(lexemes.get(index).getValue().equals("DOIS_PONTOS")){
-       //         readLexeme();
-       //         if(tipo.contains(lexemes.get(index).getValue())){
-       //             readLexeme();
-       //             if(lexemes.get(index).getValue().equals("IGUALDADE")){
-       //                 readLexeme();
-       //                 valor();
-       //                 
-       //             } 
-       //         } 
-       //     }
-       // }
+        if(lexemes.get(index).getToken().equals(Token.IDENTIFICADOR)){
+            readLexeme();
+            if(lexemes.get(index).getToken().equals(Token.DOIS_PONTOS)){
+                readLexeme();
+                if(tipo.contains(lexemes.get(index).getValue())){
+                    readLexeme();
+                    if(lexemes.get(index).getToken().equals(Token.IGUALDADE)){
+                        readLexeme();
+                        valor();
+                        if(lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)){
+                            readLexeme();
+                            declConstList();
+                        }
+                    } 
+                } 
+            }else if(lexemes.get(index).getToken().equals(Token.IGUALDADE)){
+                readLexeme();
+                valor();
+                if(lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)){
+                    readLexeme();
+                    declConstList();
+                }
+            }
+        }
     }
     
     private void declaracaoVariavel(){
-        readLexeme();
-        if (!lexemes.get(index).getToken().equals(Token.INVALID_CARACTERE)) {
+        if (lexemes.get(index).getValue().equals("VAR")) {
+            readLexeme();
             declVarList();
         }
     }
@@ -108,27 +130,37 @@ public class SintaticalAnalyzer {
     
     private void delcVar(){
         readLexeme();
-        variavel();
-        conjuntoIds();
-        if (lexemes.get(index).getToken().equals(Token.DOIS_PONTOS)) {
+        if (variavel()){
+            conjuntoIds();
             readLexeme();
-            if (tipo.contains(lexemes.get(index).getToken().toString())) {
+            if (lexemes.get(index).getToken().equals(Token.DOIS_PONTOS)) {
                 readLexeme();
-                if (!lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)) {
-                    System.out.println("Erro");
+                if (tipo.contains(lexemes.get(index).getToken().toString())) {
+                    readLexeme();
+                    if (!lexemes.get(index).getToken().equals(Token.PONTO_VIRGULA)) {
+                        System.out.println("Erro");
+                    }
                 }
             }
-        }
+        } 
     }
 
     private void conjuntoIds(){
-
+        readLexeme();
+        if (lexemes.get(index).getToken().equals(Token.VIRGULA)){
+            readLexeme();
+            if (variavel()) {
+                conjuntoIds();
+            } 
+        }
     }
     
     private void valor(){
-       // if(!lexemes.get(index).getToken().equals("STRING") && !lexemes.get(index).getToken().equals("INVALID_CARACTERE"))){
-       //    unario();
-       // }
+        if(lexemes.get(index).getToken().equals("LITERAL"){
+            readLexeme();
+        }else{
+            unario(); 
+        }
     }
     
     private void declaracaoProcedimento(){
@@ -162,7 +194,7 @@ public class SintaticalAnalyzer {
    
     private void expr2(){
         readLexeme();
-        if(operador_logico.contains(lexemes.get(index).getToken().toString())){
+        if(operador_logico.contains(lexemes.get(index).getValue())){
             exprComparacao();
             expr2();
         }
@@ -230,10 +262,12 @@ public class SintaticalAnalyzer {
             System.out.println("Erro");
         }
     }
-
-    private void variavel(){
+    
+    private boolean variavel(){
         if (lexemes.get(index).getToken().equals(Token.IDENTIFICADOR))
-            exprOp();    
+            return true;
+        else
+            return false;
     }
 
     private boolean num(){

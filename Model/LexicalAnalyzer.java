@@ -9,6 +9,7 @@ public class LexicalAnalyzer {
     private Map<String, Token> keywords;
     private List<Erro> errorList;
     private List<Lexeme> lexemes;
+    
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
