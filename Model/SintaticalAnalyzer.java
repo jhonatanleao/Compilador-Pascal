@@ -2,7 +2,6 @@ package Model;
 
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
 
 public class SintaticalAnalyzer {
     
@@ -15,16 +14,17 @@ public class SintaticalAnalyzer {
     private String operador_divisao_multiplicacao;
     private String operador_logico;
     private String funcao_procedure;
+
     public SintaticalAnalyzer(List<Lexeme> lexemes){
         this.lexemes = lexemes;
         this.index = 0;
-        this.tipo = "INTEGER REAL CHAR STRING";
+        this.tipo = "INTEGERREALCHARSTRING";
         this.operador_mais_menos = "MAIS MENOS";
         this.tipo_numerico = "REAL INTEIRO";
         this.operador_numerico = "IGUALDADE DIFERENTE MENOR MENOR_IGUAL MAIOR MAIOR_IGUAL";
         this.operador_divisao_multiplicacao = "DIVISAO MULTIPLICACAO";
-        this.operador_logico = "OPERADOR_LOGICO_OU OPERADOR_LOGICO_E";
-        this.funcao_procedure = "PROCEDUREFUNCTION";
+        this.operador_logico = "AND OR";
+        this.funcao_procedure = "PROCEDURE FUNCTION";
     }
 
     private void readLexeme(){
@@ -42,15 +42,17 @@ public class SintaticalAnalyzer {
     }
 
 
-    private void programa(){      
+    public void programa(){ 
+            
         if(getLexemeValue(index).equals("PROGRAM")){
             readLexeme();
             if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
                  readLexeme();
                 if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
                     readLexeme();
-                    declaracoes();
+                    declaracoes(); 
                     if(getLexemeValue(index).equals("BEGIN")){
+                        readLexeme();
                         instrucoes();
                         if(getLexemeValue(index).equals("END.")){
                             System.out.println("FIM");        
@@ -78,8 +80,8 @@ public class SintaticalAnalyzer {
             readLexeme();
             if(getLexemeValue(index).equals("END")){
                 readLexeme();
-                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
-                    System.out.println("Erro PONTO_VIRGULA");
+                if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
+                   readLexeme();
                 }
             }
         }
@@ -135,20 +137,21 @@ public class SintaticalAnalyzer {
     
     private void declVarList(){
         delcVar();
-        declConstList();
+        if(variavel())
+            declVarList();
     }
     
-    private void delcVar(){
-        readLexeme();
+    private void delcVar(){ 
+        
         if (variavel()){
             conjuntoIds();
             readLexeme();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
-                readLexeme();
-                if (tipo.contains(getLexemeToken(index).toString())) {
+                readLexeme(); 
+                if (tipo.contains(getLexemeValue(index))) {
                     readLexeme();
-                    if (!getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
-                        System.out.println("Erro");
+                    if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
+                        readLexeme();  
                     }
                 }
             }
@@ -156,17 +159,17 @@ public class SintaticalAnalyzer {
     }
 
     private void conjuntoIds(){
-        readLexeme();
         if (getLexemeToken(index).equals(Token.VIRGULA)){
             readLexeme();
             if (variavel()) {
+                readLexeme();
                 conjuntoIds();
             } 
         }
     }
     
     private void valor(){
-        if(getLexemeToken(index).equals("LITERAL")){
+        if(getLexemeToken(index).equals(Token.STRING)){
             readLexeme();
         }else{
             unario(); 
@@ -175,12 +178,13 @@ public class SintaticalAnalyzer {
     
     private void declaracaoProcedimento(){
         declProc();
-        declaracaoProcedimento();
+        if(funcao_procedure.contains(getLexemeValue(index)))
+            declaracaoProcedimento();
     }
 
     private void declProc(){
         boolean isProcedure = false;
-        readLexeme();
+        
         if (funcao_procedure.contains(getLexemeValue(index))){
             readLexeme();
             if (getLexemeValue(index).equals("PROCEDURE")){
@@ -189,19 +193,23 @@ public class SintaticalAnalyzer {
             if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+                    readLexeme();
                     parametros();
                     if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
                         readLexeme();
                         if(isProcedure){
                             if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
-                               declaracaoVariavel();
-                               bloco();
+                                readLexeme();
+                                declaracaoVariavel();
+                                bloco();
                             } 
                         }else{
                             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)){
                                 readLexeme();
                                 if (tipo.contains(getLexemeValue(index))){
+                                    readLexeme();
                                     if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
+                                        readLexeme();
                                         declaracaoVariavel();
                                         bloco();
                                     }
@@ -223,63 +231,57 @@ public class SintaticalAnalyzer {
         instrucoes();
     }
 
-    private void inst(){
-        readLexeme();
+     private void inst(){
         if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
             readLexeme();
             if(getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)){
-                expr();
                 readLexeme();
-                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                    System.out.println("Erro, ponto e virgula não encontrado");                           
-            }
-
-            if(getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+                expr();
+                if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                    readLexeme(); 
+            } else if(getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+                readLexeme();
                 expr();
                 if(getLexemeToken(index).equals(Token.COLCHETE_DIREITO)){
                     readLexeme();
                     if(getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)){
-                        expr();
                         readLexeme();
-                        if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                            System.out.println("Erro, ponto e virgula não encontrado");                                     
+                        expr();
+                        if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                            readLexeme();                                     
                     } else {
                     System.out.println("Erro, é espera um operador de atribuição");                    
                     }
                 } else {
                     System.out.println("Erro, colchete direito não encontrado");                    
                 }
-            }
-
-            if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+            } else if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+                readLexeme();
                 parametros2();
                 readLexeme();
                 if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
                     readLexeme();
-                    if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                        System.out.println("Erro, ponto e virgula não encontrado");                    
+                    if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                        readLexeme();                    
                 } else {
                     System.out.println("Erro, parentese direito não encontrado");                    
                 }
             }
         
         } else if(getLexemeValue(index).equals("IF")) {
-            expr();
             readLexeme();
+            expr();
             if(getLexemeValue(index).equals("THEN")){
                 inst();
-                readLexeme();
                 if(getLexemeValue(index).equals("ELSE"))
                     inst();
-                else
-                    index--;                
             } else {
                 System.out.println("Erro, é esperado um then");
             }
             
         } else if(getLexemeValue(index).equals("WHILE")){
-            expr();
             readLexeme();
+            expr();
             if(getLexemeValue(index).equals("DO")){
                 inst();
             }else {
@@ -287,41 +289,39 @@ public class SintaticalAnalyzer {
             }
 
         } else if(getLexemeValue(index).equals("REPEAT")){
-            inst();
             readLexeme();
+            inst();
             if(getLexemeValue(index).equals("UNTIL")){
-                expr();
                 readLexeme();
-                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                    System.out.println("Erro, ponto e virgula não encontrado");
+                expr();
+                if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                   readLexeme();
             } else {
                 System.out.println("Erro, é esperado um UNTIL no laço de repetição REPEAT");
             }
 
         } else if(getLexemeValue(index).equals("BREAK")){
             readLexeme();
-            if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                System.out.println("Erro, ponto e virgula não encontrado");
+            if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                readLexeme();
 
         } else if(getLexemeValue(index).equals("CONTINUE")){
             readLexeme();
-            if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
-                System.out.println("Erro, ponto e virgula não encontrado");
+            if(getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                readLexeme();
 
-        } else {
+        } else {          
             bloco();
         }
     }
 
     private void parametros2(){       
-        readLexeme();
         if (getLexemeToken(index).equals(Token.VIRGULA)){
             readLexeme();
             expr();
             parametros2();
 
         } else {
-            index--;
             expr();
             parametros2();
         }
@@ -372,7 +372,6 @@ public class SintaticalAnalyzer {
     }
 
     private void termo2(){
-        readLexeme();
         if(operador_divisao_multiplicacao.contains(getLexemeToken(index).toString())){
             unario();
             termo2();
@@ -389,18 +388,23 @@ public class SintaticalAnalyzer {
     }
 
     private void fator(){
-        if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
-            expr();
-            if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
-                System.out.println("Erro");
-            }
+        if(variavel() || num() || literal()){
+            readLexeme(); 
+        }else{
+            //erro
         }
 
-        if(!tipo.contains(getLexemeToken(index).toString()) && !getLexemeToken(index).equals(Token.INVALID_CARACTERE)){
-           variavel();
-        }else{
-            System.out.println("Erro");
-        }
+      //  if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+      //      expr();
+      //      if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
+      //          System.out.println("Erro");
+      //      }
+      //  }
+      //  if(!tipo.contains(getLexemeToken(index).toString()) && !getLexemeToken(index).equals(Token.INVALID_CARACTERE)){
+      //     variavel();
+      //  }else{
+      //      System.out.println("Erro");
+      //  }
     }
     
     private boolean variavel(){

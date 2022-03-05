@@ -20,7 +20,6 @@ public class ColorLineTable extends DefaultTableCellRenderer {
 
     try {
       String token = String.valueOf(objeto).toString();
-      System.out.println(token);
       if (token.contains("INVALID")) {
         background = Color.RED;
       }
