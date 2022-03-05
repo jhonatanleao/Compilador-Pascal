@@ -166,7 +166,7 @@ public class SintaticalAnalyzer {
     }
     
     private void valor(){
-        if(getLexemeToken(index).equals("LITERAL"){
+        if(getLexemeToken(index).equals("LITERAL")){
             readLexeme();
         }else{
             unario(); 
@@ -179,12 +179,12 @@ public class SintaticalAnalyzer {
     }
 
     private void declProc(){
-        boolean isProcedute = false;
+        boolean isProcedure = false;
         readLexeme();
         if (funcao_procedure.contains(getLexemeValue(index))){
             readLexeme();
             if (getLexemeValue(index).equals("PROCEDURE")){
-                isProcedute = true;
+                isProcedure = true;
             }
             if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
                 readLexeme();
@@ -192,7 +192,7 @@ public class SintaticalAnalyzer {
                     parametros();
                     if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
                         readLexeme();
-                        if(isProcedute){
+                        if(isProcedure){
                             if(getLexemeToken(index).equals(Token.PONTO_VIRGULA)){
                                declaracaoVariavel();
                                bloco();
@@ -224,11 +224,107 @@ public class SintaticalAnalyzer {
     }
 
     private void inst(){
+        readLexeme();
+        if(getLexemeToken(index).equals(Token.IDENTIFICADOR)){
+            readLexeme();
+            if(getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)){
+                expr();
+                readLexeme();
+                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                    System.out.println("Erro, ponto e virgula não encontrado");                           
+            }
+
+            if(getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+                expr();
+                if(getLexemeToken(index).equals(Token.COLCHETE_DIREITO)){
+                    readLexeme();
+                    if(getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)){
+                        expr();
+                        readLexeme();
+                        if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                            System.out.println("Erro, ponto e virgula não encontrado");                                     
+                    } else {
+                    System.out.println("Erro, é espera um operador de atribuição");                    
+                    }
+                } else {
+                    System.out.println("Erro, colchete direito não encontrado");                    
+                }
+            }
+
+            if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
+                parametros2();
+                readLexeme();
+                if(getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
+                    readLexeme();
+                    if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                        System.out.println("Erro, ponto e virgula não encontrado");                    
+                } else {
+                    System.out.println("Erro, parentese direito não encontrado");                    
+                }
+            }
         
+        } else if(getLexemeValue(index).equals("IF")) {
+            expr();
+            readLexeme();
+            if(getLexemeValue(index).equals("THEN")){
+                inst();
+                readLexeme();
+                if(getLexemeValue(index).equals("ELSE"))
+                    inst();
+                else
+                    index--;                
+            } else {
+                System.out.println("Erro, é esperado um then");
+            }
+            
+        } else if(getLexemeValue(index).equals("WHILE")){
+            expr();
+            readLexeme();
+            if(getLexemeValue(index).equals("DO")){
+                inst();
+            }else {
+                System.out.println("Erro, é esperado um DO no laço de repetição WHILE");
+            }
+
+        } else if(getLexemeValue(index).equals("REPEAT")){
+            inst();
+            readLexeme();
+            if(getLexemeValue(index).equals("UNTIL")){
+                expr();
+                readLexeme();
+                if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                    System.out.println("Erro, ponto e virgula não encontrado");
+            } else {
+                System.out.println("Erro, é esperado um UNTIL no laço de repetição REPEAT");
+            }
+
+        } else if(getLexemeValue(index).equals("BREAK")){
+            readLexeme();
+            if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                System.out.println("Erro, ponto e virgula não encontrado");
+
+        } else if(getLexemeValue(index).equals("CONTINUE")){
+            readLexeme();
+            if(!getLexemeToken(index).equals(Token.PONTO_VIRGULA))
+                System.out.println("Erro, ponto e virgula não encontrado");
+
+        } else {
+            bloco();
+        }
     }
 
-    private void parametros2(){
+    private void parametros2(){       
         readLexeme();
+        if (getLexemeToken(index).equals(Token.VIRGULA)){
+            readLexeme();
+            expr();
+            parametros2();
+
+        } else {
+            index--;
+            expr();
+            parametros2();
+        }
     }
 
     private void expr(){
