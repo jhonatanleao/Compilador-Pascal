@@ -12,6 +12,7 @@ import Model.ColorLineTable;
 import Model.Erro;
 import Model.Lexeme;
 import Model.LexicalAnalyzer;
+import Model.SintaticalAnalyzer;
 import View.LittlePascalView;
 
 public class LexicalController {
@@ -20,19 +21,21 @@ public class LexicalController {
     LexicalAnalyzer lexicalAnalyzer;
     DefaultTableModel tblLexemes;
     ColorLineTable colorLine;
+    SintaticalAnalyzer sintaticalAnalyzer;
 
     public LexicalController() {
         this.lexicalAnalyzer = new LexicalAnalyzer();
         this.view = new LittlePascalView();
         this.tblLexemes = new DefaultTableModel();
         this.colorLine = new ColorLineTable();
-
+        this.sintaticalAnalyzer = new SintaticalAnalyzer(lexicalAnalyzer.getLexemes());
         this.view.getBtnCompile().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 analyze();
+                sintaticalAnalyzer.programa();
                 view.getTxaOutput().setText(update());
-
+                
             }
 
         });
@@ -79,7 +82,6 @@ public class LexicalController {
         if (this.lexicalAnalyzer.getErrorList().size() > 0) {
             for (Erro e : this.lexicalAnalyzer.getErrorList()) {
                 output += "".concat(e.getType()).concat("\n");
-                System.out.println(e.getType());
             }
         }
         for (Lexeme l : this.lexicalAnalyzer.getLexemes()) {
