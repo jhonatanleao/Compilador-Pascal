@@ -150,7 +150,6 @@ public class SintaticalAnalyzer {
             readLexeme();
             System.out.println("declVar - " + getLexemeValue(index));
             conjuntoIds();
-            readLexeme();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                 readLexeme();
                 if (tipo.contains(getLexemeValue(index))) {
