@@ -70,5 +70,6 @@ BEGIN
     WHILE abc > 2 DO
     BEGIN
         teste2 := abc; 
+        abc[2] := 10;
     END;
 END.

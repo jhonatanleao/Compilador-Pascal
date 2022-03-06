@@ -2,6 +2,8 @@ package Model;
 
 import java.util.List;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class SintaticalAnalyzer {
 
     private List<Lexeme> lexemes;
@@ -150,7 +152,6 @@ public class SintaticalAnalyzer {
             readLexeme();
             System.out.println("declVar - " + getLexemeValue(index));
             conjuntoIds();
-            readLexeme();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                 readLexeme();
                 if (tipo.contains(getLexemeValue(index))) {
@@ -424,8 +425,16 @@ public class SintaticalAnalyzer {
 
     private void fator() {
         if (variavel() || num() || literal()) {
-        } else {
-            // erro
+        } else if (getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+            readLexeme();
+            exprOp();
+            if (getLexemeToken(index).equals(Token.COLCHETE_DIREITO)){
+
+            }else{
+                //erro
+            }
+        }else{
+            //erro
         }
 
         // if(getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
