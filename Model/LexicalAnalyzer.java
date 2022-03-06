@@ -56,6 +56,8 @@ public class LexicalAnalyzer {
         keywords.put("//", Token.DUAS_BARRAS);
         keywords.put("{", Token.ABRE_CHAVE);
         keywords.put("}", Token.FECHA_CHAVE);
+        keywords.put("[", Token.COLCHETE_ESQUERDO);
+        keywords.put("]", Token.COLCHETE_DIREITO);
         keywords.put("(*", Token.PARENTESE_ASTERISCO);
         keywords.put("*)", Token.ASTERISCO_PARENTESE);
         keywords.put("(", Token.PARENTESE_ESQUERDO);
