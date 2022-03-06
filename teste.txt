@@ -22,12 +22,28 @@ END.
 PROGRAM hello;
 VAR 
     teste1 : INTEGER;
-    teste2 : INTEGER;
-    teste3 : INTEGER;
+    teste2 : CHAR;
+    teste3 : STRING;
 BEGIN
 
     teste1 := -2;
     teste2 := -1;
     teste3 := teste1 + teste2;
     
+END.
+
+PROGRAM hello;
+VAR 
+    teste1 : INTEGER;
+    teste2 : CHAR;
+    teste3 : STRING;
+BEGIN
+
+    teste1 := -2;
+    teste2 := -1;
+    teste3 := teste1 + teste2;
+    IF teste1 >= 2 THEN
+    BEGIN
+        teste2 := 3;
+    END;
 END.
