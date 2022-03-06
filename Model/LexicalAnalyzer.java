@@ -42,7 +42,7 @@ public class LexicalAnalyzer {
         keywords.put("<=", Token.MENOR_IGUAL);
         keywords.put(">", Token.MAIOR);
         keywords.put(">=", Token.MAIOR_IGUAL);
-        keywords.put("==", Token.IGUALDADE);
+        keywords.put("=", Token.IGUALDADE);
         keywords.put(":=", Token.OPERADOR_ATRIBUICAO);
         keywords.put("NUM", Token.PALAVRA_CHAVE);
         keywords.put("+", Token.MAIS);
@@ -58,6 +58,8 @@ public class LexicalAnalyzer {
         keywords.put("}", Token.FECHA_CHAVE);
         keywords.put("(*", Token.PARENTESE_ASTERISCO);
         keywords.put("*)", Token.ASTERISCO_PARENTESE);
+        keywords.put("(", Token.PARENTESE_ESQUERDO);
+        keywords.put(")", Token.PARENTESE_DIREITO);
         keywords.put("END.", Token.PALAVRA_CHAVE);
     }
 
