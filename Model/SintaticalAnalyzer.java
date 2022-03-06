@@ -172,6 +172,7 @@ public class SintaticalAnalyzer {
             readLexeme();
         } else {
             unario();
+            readLexeme();
         }
     }
 
@@ -239,6 +240,7 @@ public class SintaticalAnalyzer {
             if (getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)) {
                 readLexeme();
                 expr();
+                readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
                     
@@ -246,11 +248,13 @@ public class SintaticalAnalyzer {
             } else if (getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)) {
                 readLexeme();
                 expr();
+                readLexeme();
                 if (getLexemeToken(index).equals(Token.COLCHETE_DIREITO)) {
                     readLexeme();
                     if (getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)) {
                         readLexeme();
                         expr();
+                        readLexeme();
                         if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                             readLexeme();
                     } else {
@@ -273,8 +277,11 @@ public class SintaticalAnalyzer {
             }
 
         } else if (getLexemeValue(index).equals("IF")) {
+            System.out.println("IF - " + getLexemeValue(index));
             readLexeme();
             expr();
+            readLexeme();
+            System.out.println(getLexemeValue(index));
             if (getLexemeValue(index).equals("THEN")) {
                 inst();
                 if (getLexemeValue(index).equals("ELSE"))
@@ -286,6 +293,7 @@ public class SintaticalAnalyzer {
         } else if (getLexemeValue(index).equals("WHILE")) {
             readLexeme();
             expr();
+            readLexeme();
             if (getLexemeValue(index).equals("DO")) {
                 inst();
             } else {
@@ -298,6 +306,7 @@ public class SintaticalAnalyzer {
             if (getLexemeValue(index).equals("UNTIL")) {
                 readLexeme();
                 expr();
+                readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
             } else {
@@ -325,48 +334,61 @@ public class SintaticalAnalyzer {
         if (getLexemeToken(index).equals(Token.VIRGULA)) {
             readLexeme();
             expr();
+            readLexeme();
             parametros2();
 
         } else {
             expr();
+            readLexeme();
             parametros2();
         }
     }
 
     private void expr() {
         exprComparacao();
+        readLexeme();
         expr2();
     }
 
-    private void expr2() {
-        readLexeme();
+    private void expr2() { 
+        
         if (operador_logico.contains(getLexemeValue(index))) {
+            System.out.println("expr2 - " + getLexemeValue(index));
+
             exprComparacao();
+            readLexeme();
             expr2();
         }
     }
 
     private void exprComparacao() {
         exprOp();
+        System.out.println("exprComparacao - " + getLexemeValue(index));
+        readLexeme();
+        
         exprComparacao2();
     }
 
     private void exprComparacao2() {
-        
+        System.out.println("exprComparacao2 - " + getLexemeValue(index));
         if (operador_numerico.contains(getLexemeToken(index).toString())) {
             readLexeme();
             exprOp();
+            readLexeme();
             exprComparacao2();
         }
     }
 
     private void exprOp() {
+        System.out.println("exprOp - " + getLexemeValue(index));
         termo();
+        readLexeme();
         exprOp2();
     }
 
     private void termo() {
         unario(); 
+        readLexeme();
         termo2();
     }
 
@@ -374,6 +396,8 @@ public class SintaticalAnalyzer {
         if (operador_mais_menos.contains(getLexemeToken(index).toString())) {
             readLexeme();
             termo();
+            readLexeme();
+            System.out.println("exprOp2 - " + getLexemeValue(index));
             exprOp2();
         }
     }
@@ -382,12 +406,14 @@ public class SintaticalAnalyzer {
         if (operador_divisao_multiplicacao.contains(getLexemeToken(index).toString())) {
             readLexeme();
             unario();
+            readLexeme();
             termo2();
         }
     }
 
     private void unario() {
         if (operador_mais_menos.contains(getLexemeToken(index).toString())) {
+            readLexeme();
             fator();
         } else {
             fator();
@@ -396,7 +422,6 @@ public class SintaticalAnalyzer {
 
     private void fator() {
         if (variavel() || num() || literal()) {
-            readLexeme();
         } else {
             // erro
         }
