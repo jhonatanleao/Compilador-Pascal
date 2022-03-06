@@ -247,7 +247,7 @@ public class SintaticalAnalyzer {
             instrucoes();
 
     }
-
+ // daqui pra baixo nao precisa
     private void inst() {
 
         if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
