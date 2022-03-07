@@ -425,10 +425,10 @@ public class SintaticalAnalyzer {
 
     private void fator() {
         if (variavel() || num() || literal()) {
-        } else if (getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+        } else if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
             readLexeme();
-            exprOp();
-            if (getLexemeToken(index).equals(Token.COLCHETE_DIREITO)){
+            expr();
+            if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
 
             }else{
                 //erro

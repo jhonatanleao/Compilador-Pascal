@@ -33,7 +33,7 @@ public class LexicalController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 analyze();
-                sintaticalAnalyzer.programa();
+                //sintaticalAnalyzer.programa();
                 view.getTxaOutput().setText(update());
                 
             }
@@ -45,7 +45,6 @@ public class LexicalController {
             public void actionPerformed(ActionEvent e) {
                 lexicalAnalyzer.clearLists();
                 view.getTxaOutput().setText("");
-                view.getTxaInput().setText("");
                 tblLexemes.removeRow(1);
                 clearTable();
             }
