@@ -2,8 +2,6 @@ package Model;
 
 import java.util.List;
 
-import javax.lang.model.util.ElementScanner6;
-
 public class SintaticalAnalyzer {
 
     private List<Lexeme> lexemes;
@@ -78,7 +76,6 @@ public class SintaticalAnalyzer {
     private void bloco() {
         if (getLexemeValue(index).equals("BEGIN")) {
             readLexeme();
-            System.out.println("bloco - " + getLexemeValue(index));
             instrucoes();
             
             if (getLexemeValue(index).equals("END")) {
@@ -98,7 +95,6 @@ public class SintaticalAnalyzer {
     }
 
     private void declaracaoConstante() {
-        System.out.println("declaracaoConstante + " + getLexemeValue(index));
         if (getLexemeValue(index).equals("CONST")) {
             readLexeme();
             declConstList();
@@ -146,11 +142,9 @@ public class SintaticalAnalyzer {
     }
 
     private void delcVar() {
-        System.out.println("declVar 1 - " + getLexemeValue(index));
         if (variavel()) {
             
             readLexeme();
-            System.out.println("declVar - " + getLexemeValue(index));
             conjuntoIds();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                 readLexeme();
@@ -184,7 +178,6 @@ public class SintaticalAnalyzer {
     }
 
     private void declaracaoProcedimento() {
-        System.out.println("declaracaoProcedimento - " + getLexemeValue(index));
         declProc();
         if (funcao_procedure.contains(getLexemeValue(index)))
             declaracaoProcedimento();
@@ -204,7 +197,6 @@ public class SintaticalAnalyzer {
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)) {
                     readLexeme();
-                    System.out.println("declProc parametros - " + getLexemeValue(index));
                     parametros();
                     if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)) {
                         readLexeme();
@@ -239,7 +231,6 @@ public class SintaticalAnalyzer {
 
     private void instrucoes(){ 
         inst();
-        System.out.println("instruçoes - " + getLexemeValue(index));
         if (getLexemeToken(index).equals(Token.IDENTIFICADOR) || identificadores_instrucoes.contains(getLexemeValue(index)))
             instrucoes();
     
@@ -252,7 +243,6 @@ public class SintaticalAnalyzer {
             if (getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)) {
                 readLexeme();
                 expr();
-                System.out.println("atribuicao - " + getLexemeValue(index));
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
@@ -288,11 +278,9 @@ public class SintaticalAnalyzer {
             }
 
         } else if (getLexemeValue(index).equals("IF")) {
-            System.out.println("IF - " + getLexemeValue(index));
             readLexeme();
             expr(); 
             if (getLexemeValue(index).equals("THEN")) {
-                System.out.println("THEN - " + getLexemeValue(index)); 
                 readLexeme();
                 inst();
                 if (getLexemeValue(index).equals("ELSE"))
@@ -361,9 +349,7 @@ public class SintaticalAnalyzer {
     }
 
     private void expr2() { 
-        System.out.println("expr2 - " + getLexemeValue(index));
         if (operador_logico.contains(getLexemeValue(index))) {
-            System.out.println("expr2 - " + getLexemeValue(index));
             exprComparacao();
             expr2();
         }
@@ -371,12 +357,10 @@ public class SintaticalAnalyzer {
 
     private void exprComparacao() {
         exprOp();
-        System.out.println("exprComparacao - " + getLexemeValue(index));
         exprComparacao2();
     }
 
     private void exprComparacao2() {
-        System.out.println("exprComparacao2 - " + getLexemeValue(index));
         if (operador_numerico.contains(getLexemeToken(index).toString())) {
             readLexeme();
             exprOp();
@@ -385,7 +369,6 @@ public class SintaticalAnalyzer {
     }
 
     private void exprOp() {
-        System.out.println("exprOp - " + getLexemeValue(index));
         termo();
         exprOp2();
     }
@@ -400,7 +383,6 @@ public class SintaticalAnalyzer {
         if (operador_mais_menos.contains(getLexemeToken(index).toString())) {
             readLexeme();
             termo();
-            System.out.println("exprOp2 - " + getLexemeValue(index));
             exprOp2();
         }
     }
