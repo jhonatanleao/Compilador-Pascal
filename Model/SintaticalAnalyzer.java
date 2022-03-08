@@ -83,7 +83,15 @@ public class SintaticalAnalyzer {
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                     readLexeme();
                 }
+                else{
+                    System.out.println("Falta PONTO_VIRGULA");
+                }
+            } else{
+                System.out.println("Falta END");
             }
+        }
+        else{
+            System.out.println("Falta BEGIN");
         }
     }
 
@@ -115,7 +123,16 @@ public class SintaticalAnalyzer {
                             readLexeme();
                             declConstList();
                         }
+                        else{
+                            System.out.println("Falta PONTO_VIRGULA");
+                        }
                     }
+                    else{
+                        System.out.println("Falta IGUALDADE");
+                    }
+                }
+                else{
+                    System.out.println("Falta TIPO");
                 }
             } else if (getLexemeToken(index).equals(Token.IGUALDADE)) {
                 readLexeme();
@@ -124,6 +141,12 @@ public class SintaticalAnalyzer {
                     readLexeme();
                     declConstList();
                 }
+                else{
+                    System.out.println("Falta PONTO_VIRGULA");
+                }
+            }
+            else{
+                System.out.println("Falta IGUALDADE");
             }
         }
     }
@@ -142,8 +165,7 @@ public class SintaticalAnalyzer {
     }
 
     private void delcVar() {
-        if (variavel()) {
-            
+        if (variavel()) {            
             readLexeme();
             conjuntoIds();
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
@@ -153,7 +175,16 @@ public class SintaticalAnalyzer {
                     if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
                         readLexeme();
                     }
+                    else{
+                        System.out.println("Falta PONTO_VIRGULA");
+                    }
                 }
+                else{
+                    System.out.println("Falta TIPO");
+                }
+            }
+            else{
+                System.out.println("Falta DOIS_PONTOS");
             }
         }
     }
@@ -164,6 +195,9 @@ public class SintaticalAnalyzer {
             if (variavel()) {
                 readLexeme();
                 conjuntoIds();
+            }
+            else{
+                System.out.println("Falta VARIAVEL");
             }
         }
     }
@@ -206,6 +240,9 @@ public class SintaticalAnalyzer {
                                 declaracaoVariavel();
                                 bloco();
                             }
+                            else{
+                                System.out.println("Falta PONTO_VIRGULA");
+                            }
                         } else {
                             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                                 readLexeme();
@@ -216,11 +253,29 @@ public class SintaticalAnalyzer {
                                         declaracaoVariavel();
                                         bloco();
                                     }
+                                    else{
+                                        System.out.println("Falta PONTO_VIRGULA");
+                                    }
                                 }
+                                else{
+                                    System.out.println("Falta IDENTIFICADOR");
+                                }
+                            }
+                            else{
+                                System.out.println("Falta DOIS_PONTOS");
                             }
                         }
                     }
+                    else{
+                        System.out.println("Falta PARENTESE_DIREITO");
+                    }
                 }
+                else{
+                    System.out.println("Falta PARENTESE_ESQUERDO");
+                }
+            }
+            else{
+                System.out.println("Falta IDENTIFICADOR");
             }
         }
     }
@@ -246,7 +301,9 @@ public class SintaticalAnalyzer {
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
-                    
+                else{
+                    System.out.println("Falta PONTO_VIRGULA");
+                }
 
             } else if (getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)) {
                 readLexeme();
@@ -258,6 +315,9 @@ public class SintaticalAnalyzer {
                         expr();
                         if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                             readLexeme();
+                        else{
+                            System.out.println("Falta PONTO_VIRGULA");
+                        }
                     } else {
                         System.out.println("Erro, é espera um operador de atribuição");
                     }
@@ -272,9 +332,16 @@ public class SintaticalAnalyzer {
                     readLexeme();
                     if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                         readLexeme();
+                    else{
+                        System.out.println("Falta PONTO_VIRGULA");
+                    }
                 } else {
                     System.out.println("Erro, parentese direito não encontrado");
                 }
+            }
+            else{
+                //Pode ser erro de muita coisa
+                System.out.println("Erro");
             }
 
         } else if (getLexemeValue(index).equals("IF")) {
@@ -308,6 +375,9 @@ public class SintaticalAnalyzer {
                 expr();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
+                else{
+                    System.out.println("Falta PONTO_VIRGULA");
+                }
             } else {
                 System.out.println("Erro, é esperado um UNTIL no laço de repetição REPEAT");
             }
@@ -316,11 +386,17 @@ public class SintaticalAnalyzer {
             readLexeme();
             if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                 readLexeme();
+            else{
+                System.out.println("Falta PONTO_VIRGULA");
+            }
 
         } else if (getLexemeValue(index).equals("CONTINUE")) {
             readLexeme();
             if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                 readLexeme();
+            else{
+                System.out.println("Falta PONTO_VIRGULA");
+            }
 
         } else if (getLexemeValue(index).equals("BEGIN")) {
             bloco();
@@ -328,6 +404,8 @@ public class SintaticalAnalyzer {
 
         }
     }
+
+//TALVEZ NÃO VÁ SER NECESSÁRIO FAZER ELSE NAS FUNÇÕES ABAIXO DAQUI, MAS NÃO CUSTA NADA AVALIAR
 
     private void parametros2() {
         if (getLexemeToken(index).equals(Token.VIRGULA)) {
@@ -407,13 +485,13 @@ public class SintaticalAnalyzer {
 
     private void fator() {
         if (variavel() || num() || literal()) {
-        } else if (getLexemeToken(index).equals(Token.COLCHETE_ESQUERDO)){
+        } else if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
             readLexeme();
             exprOp();
-            if (getLexemeToken(index).equals(Token.COLCHETE_DIREITO)){
+            if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
 
             }else{
-                //erro
+                System.out.println("Falta PARENTESE_DIREITO");
             }
         }else{
             //erro
