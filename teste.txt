@@ -34,13 +34,13 @@ END.
 
 PROGRAM hello;
 VAR 
-    teste1 : INTEGER;
+    teste1:INTEGER;
     teste2 : CHAR;
     teste3 : STRING;
 CONST
-    geovonibus : INTEGER = 150;
-    marcelin = todos;
-PROCEDURE marcha ( abc );
+    geovonibus : INTEGER=150;
+    marcelin=todos;
+PROCEDURE marcha (abc);
 VAR
     zyz : INTEGER;
 BEGIN

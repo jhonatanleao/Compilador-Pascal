@@ -487,7 +487,7 @@ public class SintaticalAnalyzer {
         if (variavel() || num() || literal()) {
         } else if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)){
             readLexeme();
-            exprOp();
+            expr();
             if (getLexemeToken(index).equals(Token.PARENTESE_DIREITO)){
 
             }else{

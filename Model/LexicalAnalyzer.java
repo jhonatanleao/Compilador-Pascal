@@ -9,6 +9,7 @@ public class LexicalAnalyzer {
     private Map<String, Token> keywords;
     private List<Erro> errorList;
     private List<Lexeme> lexemes;
+    private List<String> caracteres;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
@@ -63,6 +64,27 @@ public class LexicalAnalyzer {
         keywords.put("(", Token.PARENTESE_ESQUERDO);
         keywords.put(")", Token.PARENTESE_DIREITO);
         keywords.put("END.", Token.PALAVRA_CHAVE);
+        caracteres = new ArrayList<>();
+        caracteres.add("<>");
+        caracteres.add("<");
+        caracteres.add("<=");
+        caracteres.add(">");
+        caracteres.add(">=");
+        caracteres.add("=");
+        caracteres.add(":=");
+        caracteres.add("+");
+        caracteres.add("-");
+        caracteres.add("*");
+        caracteres.add("/");
+        caracteres.add("|");
+        caracteres.add(",");
+        caracteres.add(":");
+        caracteres.add(";");
+        caracteres.add("[");
+        caracteres.add("]");
+        caracteres.add("(");
+        caracteres.add(")");
+
     }
 
     public List<Erro> getErrorList() {
@@ -96,14 +118,32 @@ public class LexicalAnalyzer {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
         boolean containSemicolon = false;
-        boolean moreThanFifteen = false;
-        for (String str : line.split(" ")) {
-            if(str.contains(";")){
-                String teste[] = str.split(";");
-                str = String.join("", teste[0]);
-                containSemicolon = true;
-            } 
+        boolean moreThanFifteen = false; 
+        String aux = line;
+        String aux1 = "";
 
+        for (String s : caracteres){
+            if(aux.contains(s)){
+                aux1 = "";
+                String aux2[] = aux.split(s);
+                for (int i = 0; i < aux2.length; i++){ 
+                    if(i+1 == aux2.length){ 
+                        aux1 += aux2[i];
+                    }else{
+                        aux1 += aux2[i] + " " + s + " ";
+                    }
+                } 
+                aux = aux1;
+            } 
+        }
+        System.out.println("line"+ aux);
+        for (String str : aux.split(" ")) {
+            
+           // if(str.contains(";")){
+           //     String teste[] = str.split(";");
+           //     str = String.join("", teste[0]);
+           //     containSemicolon = true;
+           // } 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
@@ -117,10 +157,10 @@ public class LexicalAnalyzer {
                 }
                 lineTokens.put(str, token);
             }     
-            if(containSemicolon){
-                lineTokens.put(";", keywords.get(";"));
-                containSemicolon = false;
-            }
+           // if(containSemicolon){
+           //     lineTokens.put(";", keywords.get(";"));
+           //     containSemicolon = false;
+           // }
         }
         return lineTokens;
     }
