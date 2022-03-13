@@ -72,7 +72,6 @@ public class LexicalAnalyzer {
         caracteres.add(">=");
         caracteres.add("=");
         caracteres.add(":=");
-        caracteres.add("+");
         caracteres.add("-");
         caracteres.add("*");
         caracteres.add("/");
@@ -82,8 +81,7 @@ public class LexicalAnalyzer {
         caracteres.add(";");
         caracteres.add("[");
         caracteres.add("]");
-        caracteres.add("(");
-        caracteres.add(")");
+
 
     }
 
@@ -124,6 +122,7 @@ public class LexicalAnalyzer {
 
         for (String s : caracteres){
             if(aux.contains(s)){
+                containSemicolon = true;
                 aux1 = "";
                 String aux2[] = aux.split(s);
                 for (int i = 0; i < aux2.length; i++){ 
@@ -133,9 +132,16 @@ public class LexicalAnalyzer {
                         aux1 += aux2[i] + " " + s + " ";
                     }
                 } 
-                aux = aux1;
+                if(aux1.contains(": =")){
+                    String aux3[] = aux1.split(": =");
+                    aux1 = aux3[0] + ":=" + aux3[1]; 
+                }
+                aux = aux1;               
             } 
         }
+        if(containSemicolon == true)
+            aux = aux + " ;";
+
         System.out.println("line"+ aux);
         for (String str : aux.split(" ")) {
             
