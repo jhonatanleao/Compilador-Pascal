@@ -117,33 +117,37 @@ public class LexicalAnalyzer {
     private Map<String, Token> lineReader(String line, Integer idLine) {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
-        boolean containSemicolon = false;
         boolean moreThanFifteen = false; 
         String aux = line;
-        String aux1 = "";
+        String pattern = "";
 
         for (String s : caracteres){
-            if(aux.contains(s)){
-                aux1 = "";
-                String aux2[] = aux.split(s);
-                for (int i = 0; i < aux2.length; i++){ 
-                    if(i+1 == aux2.length){ 
-                        aux1 += aux2[i];
-                    }else{
-                        aux1 += aux2[i] + " " + s + " ";
-                    }
-                } 
-                aux = aux1;
+            if(aux.contains(s)){                
+                switch (s) {
+                    case "(":
+                        pattern = "\\(";
+                        break;
+                    case ")":
+                        pattern = "\\)";
+                        break;
+                    case "[":
+                        pattern = "\\[";
+                        break;
+                    case "]":
+                        pattern = "\\]";
+                        break;
+                    case "+":
+                        pattern = "\\+";
+                        break;
+                    default:
+                        pattern = s;
+                        break;
+                }
+                aux = aux.replaceAll(pattern, " " + s + " ");
             } 
         }
         System.out.println("line"+ aux);
-        for (String str : aux.split(" ")) {
-            
-           // if(str.contains(";")){
-           //     String teste[] = str.split(";");
-           //     str = String.join("", teste[0]);
-           //     containSemicolon = true;
-           // } 
+        for (String str : aux.split(" ")) { 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
@@ -156,11 +160,7 @@ public class LexicalAnalyzer {
                     erroAnalizer(str, idLine, line.indexOf(str), token, moreThanFifteen);
                 }
                 lineTokens.put(str, token);
-            }     
-           // if(containSemicolon){
-           //     lineTokens.put(";", keywords.get(";"));
-           //     containSemicolon = false;
-           // }
+            }      
         }
         return lineTokens;
     }
