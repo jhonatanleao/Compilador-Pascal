@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SintaticalAnalyzer {
@@ -14,7 +15,8 @@ public class SintaticalAnalyzer {
     private String operador_logico;
     private String funcao_procedure;
     private String identificadores_instrucoes;
-
+    private List<Erro> erros;
+    
     public SintaticalAnalyzer(List<Lexeme> lexemes) {
         this.lexemes = lexemes;
         this.index = 0;
@@ -26,6 +28,11 @@ public class SintaticalAnalyzer {
         this.operador_logico = "AND OR";
         this.funcao_procedure = "PROCEDURE FUNCTION";
         this.identificadores_instrucoes = "IF ELSE WHILE REPEAT UNTIL BREAK CONTINUE";
+        this.erros = new ArrayList<>(); 
+    }
+
+    public List<Erro> getErros(){
+        return this.erros;
     }
 
     private void readLexeme() {
