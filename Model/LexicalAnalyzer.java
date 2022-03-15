@@ -120,24 +120,6 @@ public class LexicalAnalyzer {
         String pattern = "";
 
         for (String s : caracteres){
-<<<<<<< HEAD
-            if(aux.contains(s)){
-                containSemicolon = true;
-                aux1 = "";
-                String aux2[] = aux.split(s);
-                for (int i = 0; i < aux2.length; i++){ 
-                    if(i+1 == aux2.length){ 
-                        aux1 += aux2[i];
-                    }else{
-                        aux1 += aux2[i] + " " + s + " ";
-                    }
-                } 
-                if(aux1.contains(": =")){
-                    String aux3[] = aux1.split(": =");
-                    aux1 = aux3[0] + ":=" + aux3[1]; 
-                }
-                aux = aux1;               
-=======
             if(aux.contains(s)){                
                 switch (s) {
                     case "(":
@@ -160,11 +142,9 @@ public class LexicalAnalyzer {
                         break;
                 }
                 aux = aux.replaceAll(pattern, " " + s + " ");
->>>>>>> master
             } 
         }
-        if(containSemicolon == true)
-            aux = aux + " ;";
+      
 
         System.out.println("line"+ aux);
         for (String str : aux.split(" ")) { 
