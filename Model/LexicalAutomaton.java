@@ -21,7 +21,7 @@ public class LexicalAutomaton {
             case INITIAL: {
                 if ((entry >= 'A' && entry <= 'Z') || (entry >= 'a' && entry <= 'z'))
                     return LexicalState.Q1;
-                else if (entry == '"')
+                else if (entry == '"' || entry == '\'')
                     return LexicalState.Q2;
                 else if (entry >= '0' && entry <= '9')
                     return LexicalState.Q4;
@@ -42,7 +42,7 @@ public class LexicalAutomaton {
             }
             
             case Q2: {
-                if (entry == '"')
+                if (entry == '"' || entry == '\'')
                     return LexicalState.Q3;
                 else
                     return LexicalState.Q2;
