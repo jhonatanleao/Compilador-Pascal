@@ -37,5 +37,4 @@ public enum Token {
     OPERADOR_LOGICO_OU,
     COLCHETE_ESQUERDO,
     COLCHETE_DIREITO
-
 }

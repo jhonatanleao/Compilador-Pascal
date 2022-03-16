@@ -9,6 +9,7 @@ public class LexicalAnalyzer {
     private Map<String, Token> keywords;
     private List<Erro> errorList;
     private List<Lexeme> lexemes;
+    private List<String> caracteres;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
@@ -63,17 +64,36 @@ public class LexicalAnalyzer {
         keywords.put("(", Token.PARENTESE_ESQUERDO);
         keywords.put(")", Token.PARENTESE_DIREITO);
         keywords.put("END.", Token.PALAVRA_CHAVE);
+        caracteres = new ArrayList<>();
+        caracteres.add("<>");
+        caracteres.add("<");
+        caracteres.add("<=");
+        caracteres.add(">");
+        caracteres.add(">=");
+        caracteres.add("=");
+        caracteres.add(":=");
+        caracteres.add("-");
+        caracteres.add("*");
+        caracteres.add("/");
+        caracteres.add("|");
+        caracteres.add(",");
+        caracteres.add(":");
+        caracteres.add(";");
+        caracteres.add("[");
+        caracteres.add("]");
+
+
     }
 
     public List<Erro> getErrorList() {
         return errorList;
     }
 
-    public List<Lexeme> getLexemes() {
+    public List<Lexeme> getLexemes(){
         return lexemes;
     }
 
-    public void clearLists() {
+    public void clearLists(){
         lexemes = new ArrayList<>();
         errorList = new ArrayList<>();
     }
@@ -81,11 +101,11 @@ public class LexicalAnalyzer {
     public void codeAnalizer(Map<Integer, String> code) {
         int cont;
         for (Map.Entry<Integer, String> codeEntry : code.entrySet()) {
-            Map<String, Token> lineMap = lineReader(codeEntry.getValue(), codeEntry.getKey());
+            Map<String,Token> lineMap = lineReader(codeEntry.getValue(), codeEntry.getKey());
             cont = 0;
-            for (Map.Entry<String, Token> lineEntry : lineMap.entrySet()) {
-                if (lineEntry.getValue() != null) {
-                    lexemes.add(new Lexeme(lineEntry.getValue(), lineEntry.getKey(), codeEntry.getKey(), cont));
+            for (Map.Entry<String, Token> lineEntry : lineMap.entrySet()){               
+                if(lineEntry.getValue() != null){                   
+                    lexemes.add(new Lexeme(lineEntry.getValue(), lineEntry.getKey(), codeEntry.getKey(),  cont));
                     cont += lineEntry.getKey().length() + 1;
                 }
             }
@@ -95,71 +115,100 @@ public class LexicalAnalyzer {
     private Map<String, Token> lineReader(String line, Integer idLine) {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
-        boolean containSemicolon = false;
-        boolean moreThanFifteen = false;
-        for (String str : line.split(" ")) {
-            if (str.contains(";")) {
-                String teste[] = str.split(";");
-                str = String.join("", teste[0]);
-                containSemicolon = true;
-            }
+        boolean moreThanFifteen = false; 
+        String aux = line;
+        String pattern = "";
 
+        for (String s : caracteres){
+            if(aux.contains(s)){                
+                switch (s) {
+                    case "(":
+                        pattern = "\\(";
+                        break;
+                    case ")":
+                        pattern = "\\)";
+                        break;
+                    case "[":
+                        pattern = "\\[";
+                        break;
+                    case "]":
+                        pattern = "\\]";
+                        break;
+                    case "+":
+                        pattern = "\\+";
+                        break;
+                    default:
+                        pattern = s;
+                        break;
+                }
+                aux = aux.replaceAll(pattern, " " + s + " ");
+            } 
+        }
+      
+
+        System.out.println("line"+ aux);
+        for (String str : aux.split(" ")) { 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
                 Token token = la.evaluate(str);
-
-                if (str.length() > 15)
+                
+                if(str.length() > 15)
                     moreThanFifteen = true;
 
-                if (token == Token.INVALID_CARACTERE || token == Token.BEGIN_INVALID || moreThanFifteen) {
+                if (token == Token.INVALID_CARACTERE || token == Token.BEGIN_INVALID ||  moreThanFifteen){
                     erroAnalizer(str, idLine, line.indexOf(str), token, moreThanFifteen);
                 }
                 lineTokens.put(str, token);
-            }
-            if (containSemicolon) {
-                lineTokens.put(";", keywords.get(";"));
-                containSemicolon = false;
-            }
+            }      
         }
         return lineTokens;
     }
 
-    public void erroAnalizer(String str, Integer idLine, Integer idWord, Token token, boolean moreThanFifteen) {
+    public void erroAnalizer(String str, Integer idLine, Integer idWord, Token token, boolean moreThanFifteen){
         String error = "";
         Integer id = getErrorList().size() + 1;
-        if (moreThanFifteen) {
+        if (moreThanFifteen){
             error = "String com mais de 15 caracteres na %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
-
-        if (token == Token.INVALID_CARACTERE) {
+       
+        if(token == Token.INVALID_CARACTERE){
             error = "Identificador contém caracteres inválidos na linha %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
-        if (token == Token.BEGIN_INVALID) {
+        if(token == Token.BEGIN_INVALID){
             error = "Identificador começa de forma inválida %1$d, coluna %2$d";
             getErrorList().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
         }
 
     }
 
-    public String codeParser(List<Lexeme> lexemes) {
+    public String codeParser(List<Lexeme> lexemes){
         String codeLine = "";
         int line = 0;
         for (Lexeme lexeme : lexemes) {
-            if (line != lexeme.getLine()) {
+            if (line != lexeme.getLine()){
                 codeLine += "\n";
                 line = lexeme.getLine();
             }
-            if (lexeme.getToken().name().equals("IDENTIFICADOR")) {
-                codeLine += "".concat("<").concat(lexeme.getToken().name()).concat(",")
-                        .concat(String.valueOf(lexeme.getLine())).concat(",").concat(lexeme.getValue()).concat(">");
-            } else {
-                codeLine += "".concat("<").concat(lexeme.getValue()).concat(">");
+            if (lexeme.getToken().name().equals("IDENTIFICADOR")){
+                codeLine += "".
+                            concat("<").
+                            concat(lexeme.getToken().name()).
+                            concat(",").
+                            concat(String.valueOf(lexeme.getLine())).
+                            concat(",").
+                            concat(lexeme.getValue()).
+                            concat(">");
+            }else{
+                codeLine += "".
+                            concat("<").
+                            concat(lexeme.getValue()).
+                            concat(">");
             }
-        }
+        }   
         return codeLine;
     }
 }

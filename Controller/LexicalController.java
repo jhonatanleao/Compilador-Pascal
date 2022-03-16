@@ -28,6 +28,7 @@ public class LexicalController {
         this.view = new LittlePascalView();
         this.tblLexemes = new DefaultTableModel();
         this.colorLine = new ColorLineTable();
+
         this.sintaticalAnalyzer = new SintaticalAnalyzer(lexicalAnalyzer.getLexemes());
         this.view.getBtnCompile().addActionListener(new ActionListener() {
             @Override
@@ -35,7 +36,7 @@ public class LexicalController {
                 analyze();
                 sintaticalAnalyzer.programa();
                 view.getTxaOutput().setText(update());
-                
+
             }
 
         });
@@ -45,8 +46,8 @@ public class LexicalController {
             public void actionPerformed(ActionEvent e) {
                 lexicalAnalyzer.clearLists();
                 view.getTxaOutput().setText("");
-                view.getTxaInput().setText("");
                 tblLexemes.removeRow(1);
+                sintaticalAnalyzer.clearErros();
                 clearTable();
             }
         });
@@ -79,8 +80,15 @@ public class LexicalController {
 
         tblLexemes = (DefaultTableModel) view.getLexameTable().getModel();
         String output = "";
+
         if (this.lexicalAnalyzer.getErrorList().size() > 0) {
             for (Erro e : this.lexicalAnalyzer.getErrorList()) {
+                output += "".concat(e.getType()).concat("\n");
+            }
+        }
+
+        if (this.sintaticalAnalyzer.getErros().size() > 0) {
+            for (Erro e : this.sintaticalAnalyzer.getErros()) {
                 output += "".concat(e.getType()).concat("\n");
             }
         }
