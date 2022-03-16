@@ -10,7 +10,6 @@ public class LexicalAnalyzer {
     private List<Erro> errorList;
     private List<Lexeme> lexemes;
     private List<String> caracteres;
-    private List<String> caracteresErros;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
@@ -85,8 +84,6 @@ public class LexicalAnalyzer {
         caracteres.add("]");
         caracteres.add("(");
         caracteres.add(")");
-        caracteresErros = new ArrayList<>();
-        caracteresErros.add(": =");
     }
 
     public List<Erro> getErrorList() {
@@ -120,11 +117,10 @@ public class LexicalAnalyzer {
         Map<String, Token> lineTokens = new LinkedHashMap<>();
         LexicalAutomaton la = new LexicalAutomaton();
         boolean moreThanFifteen = false; 
-        String aux = line;
         String pattern = "";
 
         for (String s : caracteres){
-            if(aux.contains(s)){                
+            if(line.contains(s)){              
                 switch (s) {
                     case "(":
                         pattern = "\\(";
@@ -145,16 +141,13 @@ public class LexicalAnalyzer {
                         pattern = s;
                         break;
                 }
-                aux = aux.replaceAll(pattern, " " + s + " ");
+                line = line.replaceAll(pattern, " " + s + " ");
             } 
         }
-        if (aux.contains(":  ="))
-            aux = aux.replaceAll(":  =", ":=");
-        System.out.println("");
+        if (line.contains(":  ="))
+            line = line.replaceAll(":  =", ":=");
     
-        for (String str : aux.split(" ")) {     
-            str = str.trim();
-
+        for (String str : line.split(" ")) {     
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
