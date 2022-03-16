@@ -34,7 +34,6 @@ public class SintaticalAnalyzer {
         this.funcao_procedure = "PROCEDURE FUNCTION";
         this.identificadores_instrucoes = "IF ELSE WHILE REPEAT UNTIL BREAK CONTINUE";
         this.erros = new ArrayList<>();
-
         this.str = " ";
         this.idLine = 0;
         this.idWord = 0;
@@ -68,7 +67,6 @@ public class SintaticalAnalyzer {
     }
 
     public void programa() {
-        System.out.println(getLexemeValue(index));
         if (getLexemeValue(index).equals("PROGRAM")) {
             readLexeme();
 
@@ -84,13 +82,11 @@ public class SintaticalAnalyzer {
 
                             System.out.println("FIM");
                         } else {
-                            System.out.println("alô");
                             id = getErros().size() + 1;
                             str = lexemes.get(index).getValue();
                             idLine = lexemes.get(index).getLine();
                             idWord = lexemes.get(index).getColumn();
                             error = "END nao encontrado na %1$d, coluna %2$d";
-                            System.out.println("alô1");
                             getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
 
                             System.out.println("Erro END.");
@@ -141,7 +137,6 @@ public class SintaticalAnalyzer {
         if (getLexemeValue(index).equals("BEGIN")) {
             readLexeme();
             instrucoes();
-
             if (getLexemeValue(index).equals("END")) {
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
@@ -282,6 +277,7 @@ public class SintaticalAnalyzer {
         if (variavel()) {
             readLexeme();
             conjuntoIds();
+            
             if (getLexemeToken(index).equals(Token.DOIS_PONTOS)) {
                 readLexeme();
                 if (tipo.contains(getLexemeValue(index))) {
@@ -308,16 +304,7 @@ public class SintaticalAnalyzer {
 
                     System.out.println("Falta TIPO");
                 }
-            } else {
-                id = getErros().size() + 1;
-                str = lexemes.get(index).getValue();
-                idLine = lexemes.get(index).getLine();
-                idWord = lexemes.get(index).getColumn();
-                error = "Falta ':'na linha %1$d, coluna %2$d";
-                getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
-                System.out.println("Falta DOIS_PONTOS");
-            }
+            } 
         }
     }
 
@@ -357,14 +344,11 @@ public class SintaticalAnalyzer {
 
     private void declProc() {
         boolean isProcedure = false;
-
         if (funcao_procedure.contains(getLexemeValue(index))) {
-
             if (getLexemeValue(index).equals("PROCEDURE")) {
                 isProcedure = true;
             }
             readLexeme();
-            System.out.println(getLexemeValue(index));
             if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)) {
@@ -479,7 +463,6 @@ public class SintaticalAnalyzer {
             if (getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)) {
                 readLexeme();
                 expr();
-                readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
                 else {
@@ -678,7 +661,6 @@ public class SintaticalAnalyzer {
         if (getLexemeToken(index).equals(Token.VIRGULA)) {
             readLexeme();
             expr();
-            readLexeme();
             parametros2();
 
         } else {
