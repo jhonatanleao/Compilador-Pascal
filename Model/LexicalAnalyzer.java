@@ -10,6 +10,7 @@ public class LexicalAnalyzer {
     private List<Erro> errorList;
     private List<Lexeme> lexemes;
     private List<String> caracteres;
+    private List<String> caracteresErros;
 
     public LexicalAnalyzer() {
         this.errorList = new ArrayList<>();
@@ -70,8 +71,8 @@ public class LexicalAnalyzer {
         caracteres.add("<=");
         caracteres.add(">");
         caracteres.add(">=");
-        caracteres.add("=");
         caracteres.add(":=");
+        caracteres.add("=");
         caracteres.add("+");
         caracteres.add("-");
         caracteres.add("*");
@@ -84,7 +85,8 @@ public class LexicalAnalyzer {
         caracteres.add("]");
         caracteres.add("(");
         caracteres.add(")");
-
+        caracteresErros = new ArrayList<>();
+        caracteresErros.add(": =");
     }
 
     public List<Erro> getErrorList() {
@@ -146,8 +148,13 @@ public class LexicalAnalyzer {
                 aux = aux.replaceAll(pattern, " " + s + " ");
             } 
         }
-        System.out.println("line"+ aux);
-        for (String str : aux.split(" ")) { 
+        if (aux.contains(":  ="))
+            aux = aux.replaceAll(":  =", ":=");
+        System.out.println("");
+    
+        for (String str : aux.split(" ")) {     
+            str = str.trim();
+
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
