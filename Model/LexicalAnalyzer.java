@@ -120,7 +120,7 @@ public class LexicalAnalyzer {
         String pattern = "";
 
         for (String s : caracteres){
-            if(line.contains(s)){              
+            if(aux.contains(s)){                
                 switch (s) {
                     case "(":
                         pattern = "\\(";
@@ -146,8 +146,8 @@ public class LexicalAnalyzer {
         }
         if (line.contains(":  ="))
             line = line.replaceAll(":  =", ":=");
-    
-        for (String str : line.split(" ")) {     
+          
+        for (String str : aux.split(" ")) { 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));
             } else {
