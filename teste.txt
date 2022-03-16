@@ -73,3 +73,32 @@ BEGIN
         abc[2] := 10;
     END;
 END.
+
+
+
+
+PROGRAM hello;
+VAR 
+    teste1:INTEGER;
+    teste2 : CHAR;
+    teste3 : STRING;
+CONST
+    geovonibus : INTEGER=150;
+    marcelin=todos;
+
+BEGIN
+
+    teste1 := -2;
+    teste2 := -1;
+    teste3 := teste1 + teste2;
+    IF teste1 >= 2 THEN
+    BEGIN
+        teste2 := 3;
+    END;
+
+    WHILE abc > 2 DO
+    BEGIN
+        teste2 := abc; 
+        abc[2] := 10;
+    END;
+END.
