@@ -46,17 +46,46 @@ VAR
 BEGIN
     xyz := 2 + abc;
 END;
-FUNCTION byonce ( a1 , a2 , a3 ) : REAL;
+FUNCTION byonce (a1 ,a2 ,a3 ) : REAL;
 VAR
-    bings , etevaldo , eloy , leton : CHAR;
+    bings, etevaldo, eloy, leton:CHAR;
 BEGIN
     IF bings = "a" THEN
-        eloy := 10;
+        eloy:=10;
     ELSE
         REPEAT
             etevaldo := 2;
         UNTIL leton >= 10;
 END;
+BEGIN
+
+    teste1 := -2;
+    teste2 := -1;
+    teste3 := teste1 + teste2;
+    IF teste1 >= 2 THEN
+    BEGIN
+        teste2 := 3;
+    END;
+
+    WHILE abc > 2 DO
+    BEGIN
+        teste2 := abc; 
+        abc[2] := 10;
+    END;
+END.
+
+
+
+
+PROGRAM hello;
+VAR 
+    teste1:INTEGER;
+    teste2 : CHAR;
+    teste3 : STRING;
+CONST
+    geovonibus : INTEGER=150;
+    marcelin=todos;
+
 BEGIN
 
     teste1 := -2;
