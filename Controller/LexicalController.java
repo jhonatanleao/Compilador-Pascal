@@ -47,7 +47,7 @@ public class LexicalController {
                 lexicalAnalyzer.clearLists();
                 view.getTxaOutput().setText("");
                 tblLexemes.removeRow(1);
-                sintaticalAnalyzer.clearErros();
+                sintaticalAnalyzer = new SintaticalAnalyzer(lexicalAnalyzer.getLexemes());
                 clearTable();
             }
         });

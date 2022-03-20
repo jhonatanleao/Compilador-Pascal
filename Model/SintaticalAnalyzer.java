@@ -25,7 +25,7 @@ public class SintaticalAnalyzer {
     public SintaticalAnalyzer(List<Lexeme> lexemes) {
         this.lexemes = lexemes;
         this.index = 0;
-        this.tipo = "INTEGERREALCHARSTRING";
+        this.tipo = "INTEGER REAL CHAR STRING";
         this.operador_mais_menos = "MAIS MENOS";
         this.tipo_numerico = "REAL INTEIRO";
         this.operador_numerico = "IGUALDADE DIFERENTE MENOR MENOR_IGUAL MAIOR MAIOR_IGUAL";

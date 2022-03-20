@@ -150,6 +150,8 @@ public class LexicalAnalyzer {
             line = line.replaceAll(">  =", ">=");
         else if (line.contains("<  ="))
             line = line.replaceAll("<  =", "<=");
+        else if (line.contains("<  >"))
+            line = line.replaceAll("<  >", "<>");
             
         for (String str : line.split(" ")) { 
             if (keywords.containsKey(str.toUpperCase())) {

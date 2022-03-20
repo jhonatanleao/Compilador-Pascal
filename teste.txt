@@ -46,12 +46,12 @@ VAR
 BEGIN
     xyz := 2 + abc;
 END;
-FUNCTION byonce ( a1 , a2 , a3 ) : REAL;
+FUNCTION byonce (a1 ,a2 ,a3 ) : REAL;
 VAR
-    bings , etevaldo , eloy , leton : CHAR;
+    bings, etevaldo, eloy, leton:CHAR;
 BEGIN
     IF bings = "a" THEN
-        eloy := 10;
+        eloy:=10;
     ELSE
         REPEAT
             etevaldo := 2;
