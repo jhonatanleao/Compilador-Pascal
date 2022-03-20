@@ -66,12 +66,12 @@ public class LexicalAnalyzer {
         keywords.put("END.", Token.PALAVRA_CHAVE);
         caracteres = new ArrayList<>();
         caracteres.add("<>");
-        caracteres.add("<");
         caracteres.add("<=");
-        caracteres.add(">");
         caracteres.add(">=");
         caracteres.add(":=");
+        caracteres.add("<");
         caracteres.add("=");
+        caracteres.add(">");
         caracteres.add("+");
         caracteres.add("-");
         caracteres.add("*");
@@ -146,7 +146,11 @@ public class LexicalAnalyzer {
         }
         if (line.contains(":  ="))
             line = line.replaceAll(":  =", ":=");
-          
+        else if (line.contains(">  ="))
+            line = line.replaceAll(">  =", ">=");
+        else if (line.contains("<  ="))
+            line = line.replaceAll("<  =", "<=");
+            
         for (String str : line.split(" ")) { 
             if (keywords.containsKey(str.toUpperCase())) {
                 lineTokens.put(str, keywords.get(str.toUpperCase()));

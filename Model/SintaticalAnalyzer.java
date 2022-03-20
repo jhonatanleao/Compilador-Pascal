@@ -53,9 +53,7 @@ public class SintaticalAnalyzer {
     }
 
     public void clearErros() {
-
         erros = new ArrayList<>();
-
     }
 
     private String getLexemeValue(int index) {
@@ -69,7 +67,6 @@ public class SintaticalAnalyzer {
     public void programa() {
         if (getLexemeValue(index).equals("PROGRAM")) {
             readLexeme();
-
             if (getLexemeToken(index).equals(Token.IDENTIFICADOR)) {
                 readLexeme();
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA)) {
@@ -79,7 +76,6 @@ public class SintaticalAnalyzer {
                         readLexeme();
                         instrucoes();
                         if (getLexemeValue(index).equals("END.")) {
-
                             System.out.println("FIM");
                         } else {
                             id = getErros().size() + 1;
@@ -148,7 +144,6 @@ public class SintaticalAnalyzer {
                     idWord = lexemes.get(index).getColumn();
                     error = "Falta ';'  na linha %1$d, coluna %2$d";
                     getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
                     System.out.println("Falta PONTO_VIRGULA");
                 }
             } else {
@@ -291,7 +286,7 @@ public class SintaticalAnalyzer {
                         idWord = lexemes.get(index).getColumn();
                         error = "Falta ';'na linha %1$d, coluna %2$d";
                         getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+        
                         System.out.println("Falta PONTO_VIRGULA");
                     }
                 } else {
@@ -332,7 +327,6 @@ public class SintaticalAnalyzer {
             readLexeme();
         } else {
             unario();
-            readLexeme();
         }
     }
 
@@ -368,7 +362,7 @@ public class SintaticalAnalyzer {
                                 idWord = lexemes.get(index).getColumn();
                                 error = "Falta ';'na linha %1$d, coluna %2$d";
                                 getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+             
                                 System.out.println("Falta PONTO_VIRGULA");
                             }
                         } else {
@@ -388,7 +382,7 @@ public class SintaticalAnalyzer {
                                         error = "Falta ';'na linha %1$d, coluna %2$d";
                                         getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine,
                                                 idWord));
-
+                                      
                                         System.out.println("Falta PONTO_VIRGULA");
                                     }
                                 } else {
@@ -463,6 +457,7 @@ public class SintaticalAnalyzer {
             if (getLexemeToken(index).equals(Token.OPERADOR_ATRIBUICAO)) {
                 readLexeme();
                 expr();
+
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
                 else {
@@ -472,7 +467,7 @@ public class SintaticalAnalyzer {
                     idWord = lexemes.get(index).getColumn();
                     error = "Falta ';' na linha %1$d, coluna %2$d";
                     getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+  
                     System.out.println("Falta PONTO_VIRGULA");
                 }
 
@@ -493,7 +488,7 @@ public class SintaticalAnalyzer {
                             idWord = lexemes.get(index).getColumn();
                             error = "Falta ';' na linha %1$d, coluna %2$d";
                             getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+                    
                             System.out.println("Falta PONTO_VIRGULA");
                         }
                     } else {
@@ -531,6 +526,7 @@ public class SintaticalAnalyzer {
                         id = getErros().size() + 1;
                         error = " ';' não encontrado na linha %1$d, coluna %2$d";
                         getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
+                
                         System.out.println("Falta PONTO_VIRGULA");
                     }
                 } else {
@@ -597,6 +593,7 @@ public class SintaticalAnalyzer {
             if (getLexemeValue(index).equals("UNTIL")) {
                 readLexeme();
                 expr();
+                
                 if (getLexemeToken(index).equals(Token.PONTO_VIRGULA))
                     readLexeme();
                 else {
@@ -606,7 +603,7 @@ public class SintaticalAnalyzer {
                     idWord = lexemes.get(index).getColumn();
                     error = " Falta ';' na linha %1$d, coluna %2$d";
                     getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+                   
                     System.out.println("Falta PONTO_VIRGULA");
                 }
             } else {
@@ -631,7 +628,7 @@ public class SintaticalAnalyzer {
                 idWord = lexemes.get(index).getColumn();
                 error = " Falta ';' na linha %1$d, coluna %2$d";
                 getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+                
                 System.out.println("Falta PONTO_VIRGULA");
             }
 
@@ -646,7 +643,7 @@ public class SintaticalAnalyzer {
                 idWord = lexemes.get(index).getColumn();
                 error = " Falta ';' na linha %1$d, coluna %2$d";
                 getErros().add(new Erro(id, str, String.format(error, idLine, idWord), idLine, idWord));
-
+         
                 System.out.println("Falta PONTO_VIRGULA");
             }
 
@@ -702,7 +699,6 @@ public class SintaticalAnalyzer {
 
     private void termo() {
         unario();
-        readLexeme();
         termo2();
     }
 
@@ -734,6 +730,7 @@ public class SintaticalAnalyzer {
 
     private void fator() {
         if (variavel() || num() || literal()) {
+            readLexeme();
         } else if (getLexemeToken(index).equals(Token.PARENTESE_ESQUERDO)) {
             readLexeme();
             expr();
